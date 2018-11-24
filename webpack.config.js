@@ -1,4 +1,5 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 Encore
 // directory where compiled assets will be stored
@@ -30,14 +31,25 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-// uncomment if you use TypeScript
-//.enableTypeScriptLoader()
+    // uncomment if you use TypeScript
+    //.enableTypeScriptLoader()
 
-// uncomment if you use Sass/SCSS files
-.enableSassLoader()
+    .enableReactPreset()
+
+    // uncomment if you use Sass/SCSS files
+    .enableSassLoader()
 
 // uncomment if you're having problems with a jQuery plugin
 //.autoProvidejQuery()
 ;
 
-module.exports = Encore.getWebpackConfig();
+const config = Encore.getWebpackConfig();
+
+config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
+    template: 'src/app.html',
+    'meta': {
+        'viewport': 'width=device-width, initial-scale=1, shrink-to-fit=no',
+    },
+}));
+
+module.exports = config;
