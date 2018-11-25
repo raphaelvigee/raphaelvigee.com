@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 
 import styles from './App.scss';
 import Home from "./Home";
-import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Education from "./Education";
 import Experiences from "./Experiences";
 import ScrollToTop from "./ScrollTop";
@@ -26,6 +26,7 @@ export default class App extends React.Component {
                                 <Route path="/education" exact component={Education}/>
                                 <Route path="/experiences" exact component={Experiences}/>
                                 <Route path="/resume" exact component={Resume}/>
+                                <Route render={() => <Redirect to={'/'} />}/>
                             </Switch>
                         </div>
                     </div>
