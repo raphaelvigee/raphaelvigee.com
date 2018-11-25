@@ -3,6 +3,14 @@
 @import "assets/fonts/Roboto/stylesheet";
 @import "assets/fonts/Icomoon/style";
 
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
 .fontLemonMilk {
   font-family: 'Lemon/Milk';
   font-weight: bold;
@@ -15,8 +23,4 @@
 .fontRoboto {
   font-family: 'Roboto';
   font-weight: bold;
-}
-
-a {
-  text-decoration: none;
 }

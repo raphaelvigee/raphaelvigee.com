@@ -8,6 +8,7 @@ import Education from "./Education";
 import Experiences from "./Experiences";
 import ScrollToTop from "./ScrollTop";
 import Resume from "./Resume";
+import Contact from "./Contact";
 
 export default class App extends React.Component {
     render() {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
                                 <Route path="/education" exact component={Education}/>
                                 <Route path="/experiences" exact component={Experiences}/>
                                 <Route path="/resume" exact component={Resume}/>
+                                <Route path="/contact" exact component={Contact}/>
                                 <Route render={() => <Redirect to={'/'} />}/>
                             </Switch>
                         </div>

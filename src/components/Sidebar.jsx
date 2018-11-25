@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import styles from './Sidebar.scss';
 import Name from "./Name";
-import {NavLink, Route} from "react-router-dom";
+import {Link, NavLink, Route} from "react-router-dom";
 import GradientLine from "./GradientLine";
 import TiltRaccoon from "./TiltRaccoon";
 
@@ -32,8 +32,12 @@ export default class Sidebar extends React.Component {
                         <Name homepage={this.props.homepage}/>
 
                         <div className={cx(styles.raccoonContainer)}>
-                            <TiltRaccoon/>
-                            <span className={styles.label}>Contact</span>
+                            <Link to={'/contact'}>
+                                <TiltRaccoon/>
+                            </Link>
+                            <Link to={'/contact'} className={styles.label}>
+                                Contact
+                            </Link>
                         </div>
 
                         <div className={styles.social}>
@@ -43,7 +47,7 @@ export default class Sidebar extends React.Component {
                             <a href="http://stackoverflow.com/users/3212099/rapha%C3%ABl-vig%C3%A9e" target={"_blank"}>
                                 <span className={cx(styles.icon, styles["icon-stack-overflow"])} />
                             </a>
-                            <a href="http://fr.linkedin.com/in/raphaelvigee" target={"_blank"}>
+                            <a href="http://linkedin.com/in/raphaelvigee" target={"_blank"}>
                                 <span className={cx(styles.icon, styles["icon-linkedin-square"])} />
                             </a>
                         </div>
@@ -54,6 +58,7 @@ export default class Sidebar extends React.Component {
                         <MenuItem to={'/education'}>Education</MenuItem>
                         <MenuItem to={'/experiences'}>Experiences</MenuItem>
                         <MenuItem to={'/resume'}>Resume</MenuItem>
+                        <MenuItem to={'/contact'}>Contact</MenuItem>
                     </div>
                 </div>
                 <div className={cx(styles.sidebarSpacer, this.props.homepage && styles.homepage)}/>

@@ -1,0 +1,19 @@
+@import "../common";
+
+.textInput {
+  @extend .fontLemonMilk;
+  border: 3px solid $primary;
+  font-weight: normal;
+  padding: .2em;
+  display: block;
+  color: lightgrey;
+  width: 100%;
+  outline: none;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  transition: .3s all;
+
+  &:focus {
+    border: 3px solid $secondary;
+  }
+}
