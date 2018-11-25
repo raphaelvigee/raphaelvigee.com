@@ -26,23 +26,26 @@ function MenuItem({to, children: label}) {
 export default class Sidebar extends React.Component {
     render() {
         return (
-            <div className={cx(styles.sidebar, this.props.homepage && styles.homepage)}>
-                <div className={cx(styles.content)}>
-                    <Name homepage={this.props.homepage}/>
+            <React.Fragment>
+                <div className={cx(styles.sidebar, this.props.homepage && styles.homepage)}>
+                    <div className={cx(styles.content)}>
+                        <Name homepage={this.props.homepage}/>
 
-                    <div className={cx(styles.raccoonContainer)}>
-                        <TiltRaccoon/>
-                        <span className={styles.label}>Contact</span>
+                        <div className={cx(styles.raccoonContainer)}>
+                            <TiltRaccoon/>
+                            <span className={styles.label}>Contact</span>
+                        </div>
+                    </div>
+
+                    <div className={styles.menu}>
+                        <MenuItem to={'/'}>Home</MenuItem>
+                        <MenuItem to={'/education'}>Education</MenuItem>
+                        <MenuItem to={'/experiences'}>Experiences</MenuItem>
+                        <MenuItem to={'/cv'}>CV</MenuItem>
                     </div>
                 </div>
-
-                <div className={styles.menu}>
-                    <MenuItem to={'/'}>Home</MenuItem>
-                    <MenuItem to={'/education'}>Education</MenuItem>
-                    <MenuItem to={'/experiences'}>Experiences</MenuItem>
-                    <MenuItem to={'/cv'}>CV</MenuItem>
-                </div>
-            </div>
+                <div className={cx(styles.sidebarSpacer, this.props.homepage && styles.homepage)}/>
+            </React.Fragment>
         );
     }
 }

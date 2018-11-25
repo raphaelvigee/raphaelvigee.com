@@ -1,7 +1,17 @@
 @import "./variables";
 @import "assets/fonts/LemonMilk/stylesheet";
+@import "assets/fonts/Roboto/stylesheet";
 
 .fontLemonMilk {
   font-family: 'Lemon/Milk';
+  font-weight: bold;
+}
+
+.fontRobotoLt {
+  font-family: 'Roboto Lt';
+}
+
+.fontRoboto {
+  font-family: 'Roboto';
   font-weight: bold;
 }

@@ -1,0 +1,8 @@
+@import "../common";
+
+.title {
+  @extend .fontLemonMilk;
+  font-size: 2.5em;
+  color: $primary;
+  margin: 0 0 5px;
+}
