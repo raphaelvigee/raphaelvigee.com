@@ -1,0 +1,14 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+
+  .left {
+    flex: 0;
+  }
+
+  .right {
+    flex: 1;
+  }
+}

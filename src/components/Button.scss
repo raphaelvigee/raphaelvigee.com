@@ -1,0 +1,11 @@
+@import "../common";
+
+.btn {
+  @extend .fontLemonMilk;
+  background: $primary;
+  color: white;
+  padding: .5em;
+  cursor: pointer;
+  font-size: 1.5em;
+  text-align: center;
+}
