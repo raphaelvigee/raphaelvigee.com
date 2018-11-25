@@ -20,6 +20,11 @@ export default class Experiences extends React.Component {
 
                 <SubTitle label={"Jobs"}/>
 
+                <Entry date={"August 2018 - July 2019"}
+                       title={"Software Engineer Intern"}
+                       details={"DevOps / ReactJs / NodeJs / Python / Go"}
+                       location={"Cisco, San Jose, USA"}/>
+
                 <Entry date={"June - July 2017"}
                        title={"Full Stack Web Developer"}
                        details={"Symfony 3 / ReactJs"}

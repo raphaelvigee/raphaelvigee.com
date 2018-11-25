@@ -41,7 +41,7 @@ export default class Sidebar extends React.Component {
                         <MenuItem to={'/'}>Home</MenuItem>
                         <MenuItem to={'/education'}>Education</MenuItem>
                         <MenuItem to={'/experiences'}>Experiences</MenuItem>
-                        <MenuItem to={'/cv'}>CV</MenuItem>
+                        <MenuItem to={'/resume'}>Resume</MenuItem>
                     </div>
                 </div>
                 <div className={cx(styles.sidebarSpacer, this.props.homepage && styles.homepage)}/>

@@ -16,7 +16,7 @@ export default class Home extends React.Component {
                     <div className={styles.buttonsContainer}>
                         <LinkButton to={'/education'} label={"Education"}/>
                         <LinkButton to={'/experiences'} label={"Experiences"}/>
-                        <LinkButton to={'/cv'} label={"CV"}/>
+                        <LinkButton to={'/resume'} label={"Resume"}/>
                     </div>
                 </div>
             </div>

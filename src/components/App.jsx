@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-d
 import Education from "./Education";
 import Experiences from "./Experiences";
 import ScrollToTop from "./ScrollTop";
+import Resume from "./Resume";
 
 export default class App extends React.Component {
     render() {
@@ -24,7 +25,7 @@ export default class App extends React.Component {
                                 <Route path="/" exact component={Home}/>
                                 <Route path="/education" exact component={Education}/>
                                 <Route path="/experiences" exact component={Experiences}/>
-                                <Route path="/cv" exact component={() => "CV"}/>
+                                <Route path="/resume" exact component={Resume}/>
                             </Switch>
                         </div>
                     </div>
