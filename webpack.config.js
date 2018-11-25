@@ -2,8 +2,8 @@ const Encore = require('@symfony/webpack-encore');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 Encore
-    .setOutputPath('public/build/')
-    .setPublicPath('/build')
+    .setOutputPath('build/')
+    .setPublicPath('/')
 
     .addEntry('app', './src/index.jsx')
 

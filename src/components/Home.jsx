@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './Home.scss';
-import Button from "./Button";
+import LinkButton from "./LinkButton";
 
 export default class Home extends React.Component {
     render() {
@@ -14,9 +14,9 @@ export default class Home extends React.Component {
                 </div>
                 <div className={styles.bottom}>
                     <div className={styles.buttonsContainer}>
-                        <Button label={"Education"}/>
-                        <Button label={"Experiences"}/>
-                        <Button label={"CV"}/>
+                        <LinkButton to={'/education'} label={"Education"}/>
+                        <LinkButton to={'/experiences'} label={"Experiences"}/>
+                        <LinkButton to={'/cv'} label={"CV"}/>
                     </div>
                 </div>
             </div>
