@@ -48,7 +48,7 @@ export default class Experiences extends React.Component {
                        title={"Full Stack Web Developer"}
                        location={"Les Argonautes, Paris, France"}/>
 
-                <SubTitle label={"Projects"}/>
+                <SubTitle style={{marginTop: 60}} label={"Projects"}/>
 
                 <ProjectEntry title={"Risotto"}
                               link={'https://github.com/raphaelvigee/risotto'}

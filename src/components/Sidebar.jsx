@@ -35,6 +35,18 @@ export default class Sidebar extends React.Component {
                             <TiltRaccoon/>
                             <span className={styles.label}>Contact</span>
                         </div>
+
+                        <div className={styles.social}>
+                            <a href="http://github.com/raphaelvigee" target={"_blank"}>
+                                <span className={cx(styles.icon, styles["icon-github"])} />
+                            </a>
+                            <a href="http://stackoverflow.com/users/3212099/rapha%C3%ABl-vig%C3%A9e" target={"_blank"}>
+                                <span className={cx(styles.icon, styles["icon-stack-overflow"])} />
+                            </a>
+                            <a href="http://fr.linkedin.com/in/raphaelvigee" target={"_blank"}>
+                                <span className={cx(styles.icon, styles["icon-linkedin-square"])} />
+                            </a>
+                        </div>
                     </div>
 
                     <div className={styles.menu}>

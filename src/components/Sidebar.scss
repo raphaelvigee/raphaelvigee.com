@@ -42,6 +42,25 @@ $homepageWidth: 50vw;
     }
   }
 
+  .social {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: $width;
+    margin-top: auto;
+    padding-top: .3em;
+    padding-bottom: .3em;
+
+    a {
+      color: white;
+      transition: .2s color;
+
+      &:hover {
+        color: $secondary;
+      }
+    }
+  }
+
   &:not(.homepage) {
     .menu {
       position: absolute;
