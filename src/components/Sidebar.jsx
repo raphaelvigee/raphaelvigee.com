@@ -2,10 +2,10 @@ import React from 'react';
 import cx from 'classnames';
 
 import styles from './Sidebar.scss';
-import raccoon from '../assets/images/raccoon.svg';
 import Name from "./Name";
 import {NavLink, Route} from "react-router-dom";
 import GradientLine from "./GradientLine";
+import TiltRaccoon from "./TiltRaccoon";
 
 function MenuItem({to, children: label}) {
     return (
@@ -14,7 +14,7 @@ function MenuItem({to, children: label}) {
                 <span className={styles.first}>
                     {label.substring(0, 1)}
                 </span>
-                    <span className={styles.rest}>
+                <span className={styles.rest}>
                     {label.substring(1)}
                 </span>
                 <GradientLine show={!!match} width={'60%'}/>
@@ -31,7 +31,7 @@ export default class Sidebar extends React.Component {
                     <Name homepage={this.props.homepage}/>
 
                     <div className={cx(styles.raccoonContainer)}>
-                        <img src={raccoon} alt="Raccoon"/>
+                        <TiltRaccoon/>
                         <span className={styles.label}>Contact</span>
                     </div>
                 </div>
