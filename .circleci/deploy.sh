@@ -7,7 +7,9 @@ git clone $CIRCLE_REPOSITORY_URL out
 
 cd out
 git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
+cp ./CNAME /tmp/CNAME
 git rm -rf .
+cp /tmp/CNAME ./CNAME
 cd ..
 
 yarn build
