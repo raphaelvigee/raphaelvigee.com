@@ -1,5 +1,5 @@
 import React from 'react';
-import SideMenu from "./SideMenu";
+import Sidebar from "./Sidebar";
 
 import styles from './App.scss';
 import Home from "./Home";
@@ -12,7 +12,7 @@ export default class App extends React.Component {
                 <div className={styles.app}>
                     <div className={styles.left}>
                         <Route path={'/'} exact children={({match}) => (
-                            <SideMenu homepage={!!match}/>
+                            <Sidebar homepage={!!match}/>
                         )} />
                     </div>
                     <div className={styles.right}>
