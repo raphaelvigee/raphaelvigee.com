@@ -16,23 +16,27 @@ export default class App extends React.Component {
         return (
             <Router>
                 <ScrollToTop>
-                    <Route path={'/'} exact children={({match}) => (
-                        <div className={cx(styles.app, match && styles.homepage)}>
-                            <div className={styles.left}>
-                                <Sidebar homepage={match}/>
+                    <Route children={({location}) => {
+                        const homepage = location.pathname === "/";
+
+                        return (
+                            <div className={cx(styles.app, homepage && styles.homepage)}>
+                                <div className={styles.left}>
+                                    <Sidebar homepage={homepage}/>
+                                </div>
+                                <div className={styles.right}>
+                                    <Switch>
+                                        <Route path="/" exact component={Home}/>
+                                        <Route path="/education" exact component={Education}/>
+                                        <Route path="/experiences" exact component={Experiences}/>
+                                        <Route path="/resume" exact component={Resume}/>
+                                        <Route path="/contact" exact component={Contact}/>
+                                        <Redirect to="/"/>
+                                    </Switch>
+                                </div>
                             </div>
-                            <div className={styles.right}>
-                                <Switch>
-                                    <Route path="/" exact component={Home}/>
-                                    <Route path="/education" exact component={Education}/>
-                                    <Route path="/experiences" exact component={Experiences}/>
-                                    <Route path="/resume" exact component={Resume}/>
-                                    <Route path="/contact" exact component={Contact}/>
-                                    <Route render={() => <Redirect to={'/'}/>}/>
-                                </Switch>
-                            </div>
-                        </div>
-                    )}/>
+                        )
+                    }}/>
                 </ScrollToTop>
             </Router>
         );
