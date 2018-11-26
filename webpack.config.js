@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const Encore = require('@symfony/webpack-encore');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -35,5 +36,13 @@ config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
         viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
     },
 }));
+
+config.plugins.push(
+    new webpack.DefinePlugin({
+        'process.env': {
+            CONTACT_FORM_URL: JSON.stringify(process.env.CONTACT_FORM_URL),
+        },
+    }),
+);
 
 module.exports = config;

@@ -7,9 +7,9 @@ export default class Button extends React.Component {
         const {label, ...rest} = this.props;
 
         return (
-            <div className={styles.btn} {...rest}>
+            <button className={styles.btn} {...rest}>
                 {label}
-            </div>
+            </button>
         )
     }
 }

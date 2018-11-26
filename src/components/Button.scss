@@ -8,8 +8,13 @@
   cursor: pointer;
   font-size: 1.5em;
   text-align: center;
+  outline: none;
 
   &:link, &:visited, &:hover, &:active {
     text-decoration: none !important;
+  }
+
+  &:disabled {
+    background: lighten(grayscale($primary), 20%);
   }
 }
