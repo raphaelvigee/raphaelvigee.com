@@ -19,8 +19,9 @@ yarn build
 cp -a build/. out/.
 
 mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
-./.circleci/generate_structure.sh
 cd out
+
+./.circleci/generate_structure.sh
 
 git add -A
 git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
