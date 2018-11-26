@@ -1,23 +1,19 @@
 @import "../common";
 
-$width: 100px;
-$homepageWidth: 50vw;
-
 .sidebarSpacer {
-  width: $width;
+  width: 100%;
   transition: .3s all;
 
   &.homepage {
-    width: $homepageWidth;
+    display: none;
   }
 }
 
 .sidebar {
   background: $primary;
   height: 100vh;
-  width: $width;
+  width: inherit;
   transition: .3s all;
-  position: fixed;
 
   .content {
     display: flex;
@@ -46,7 +42,7 @@ $homepageWidth: 50vw;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    width: $width;
+    width: 100%;
     margin-top: auto;
     padding-top: .3em;
     padding-bottom: .3em;
@@ -62,6 +58,8 @@ $homepageWidth: 50vw;
   }
 
   &:not(.homepage) {
+    position: fixed;
+
     .menu {
       position: absolute;
       left: 100%;
@@ -107,7 +105,11 @@ $homepageWidth: 50vw;
   }
 
   &.homepage {
-    width: $homepageWidth;
+    width: 100%;
+
+    .social {
+      width: 100px;
+    }
 
     .menu {
       display: none;
@@ -127,6 +129,16 @@ $homepageWidth: 50vw;
         margin-top: 1em;
         font-size: 1.5em;
       }
+    }
+  }
+}
+
+@include media("<=tablet") {
+  .sidebar {
+    position: relative;
+
+    &.homepage {
+      width: 100%;
     }
   }
 }
