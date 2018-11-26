@@ -41,6 +41,7 @@ config.module.rules.push({
 
 config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
     template: 'src/app.html',
+    title: 'Raphaël Vigee',
     meta: {
         viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
     },
