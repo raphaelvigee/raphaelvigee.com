@@ -23,3 +23,14 @@ git add -A
 git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
 
 git push origin $TARGET_BRANCH
+
+cd aws
+cat >./secrets.json <<EOF
+{
+  "NODE_ENV": "prod",
+  "EMAIL": "contact@raphaelvigee.com",
+  "DOMAIN": $DOMAIN
+}
+EOF
+
+serverless deploy
