@@ -1,13 +1,13 @@
 const aws = require('aws-sdk');
 const ses = new aws.SES();
-const myEmail = process.env.EMAIL;
-const myDomain = process.env.DOMAIN;
+const senderEmail = process.env.EMAIL;
+const corsOrigin = process.env.CORS_ORIGIN;
 
 function generateResponse (code, payload) {
     return {
         statusCode: code,
         headers: {
-            'Access-Control-Allow-Origin': myDomain,
+            'Access-Control-Allow-Origin': corsOrigin,
             'Access-Control-Allow-Headers': 'x-requested-with',
             'Access-Control-Allow-Credentials': true
         },
@@ -20,7 +20,7 @@ function generateError (code, err) {
     return {
         statusCode: code,
         headers: {
-            'Access-Control-Allow-Origin': myDomain,
+            'Access-Control-Allow-Origin': corsOrigin,
             'Access-Control-Allow-Headers': 'x-requested-with',
             'Access-Control-Allow-Credentials': true
         },
@@ -37,8 +37,8 @@ function generateEmailParams (body) {
     }
 
     return {
-        Source: myEmail,
-        Destination: { ToAddresses: [myEmail] },
+        Source: senderEmail,
+        Destination: { ToAddresses: [senderEmail] },
         ReplyToAddresses: [email],
         Message: {
             Body: {

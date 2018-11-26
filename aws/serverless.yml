@@ -11,7 +11,7 @@ provider:
   environment:
     NODE_ENV: ${self:custom.secrets.NODE_ENV}
     EMAIL: ${self:custom.secrets.EMAIL}
-    DOMAIN: ${self:custom.secrets.DOMAIN}
+    CORS_ORIGIN: ${self:custom.secrets.CORS_ORIGIN}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
