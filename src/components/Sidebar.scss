@@ -38,6 +38,40 @@
     }
   }
 
+  .menuToggle {
+    display: none;
+    cursor: pointer;
+    margin-top: 1.2em;
+
+    .bar1, .bar2, .bar3 {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 6px 0;
+      transition: 0.4s;
+    }
+  }
+
+  .arrow {
+    display: none;
+    border: solid white;
+    border-width: 0 5px 5px 0;
+    padding: 20px;
+    transform: rotate(45deg);
+    margin-bottom: 20px;
+  }
+
+  .bounce {
+    animation: bounce 0.5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes bounce {
+    from { transform: translate3d(0, 0, 0);     }
+    to   { transform: translate3d(0, -10px, 0); }
+  }
+
   .social {
     display: flex;
     flex-direction: row;
@@ -60,6 +94,12 @@
   &:not(.homepage) {
     position: fixed;
 
+    &.active {
+      .menu {
+        width: 200px;
+      }
+    }
+
     .menu {
       position: absolute;
       left: 100%;
@@ -69,6 +109,10 @@
       top: 0;
       overflow: hidden;
       transition: .3s all;
+
+      .container {
+        padding: .7em;
+      }
 
       .item {
         @extend .fontLemonMilk;
@@ -90,16 +134,6 @@
             color: $secondary;
           }
         }
-
-        &.active {
-
-        }
-      }
-    }
-
-    &:hover {
-      .menu {
-        width: 200px;
       }
     }
   }
@@ -133,12 +167,36 @@
   }
 }
 
+@include media(">tablet") {
+  .sidebar {
+    &:hover {
+      .menu {
+        width: 200px;
+      }
+    }
+  }
+}
+
 @include media("<=tablet") {
   .sidebar {
     position: relative;
 
     &.homepage {
       width: 100%;
+
+      .arrow {
+        display: block;
+      }
+    }
+
+    &:not(.homepage) {
+      .menuToggle {
+        display: inline-block;
+      }
+    }
+
+    .social {
+      display: none;
     }
   }
 }
