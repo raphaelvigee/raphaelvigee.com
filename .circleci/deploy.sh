@@ -32,7 +32,7 @@ cat >./secrets.json <<EOF
 {
   "NODE_ENV": "prod",
   "EMAIL": "contact@raphaelvigee.com",
-  "DOMAIN": "$DOMAIN"
+  "CORS_ORIGIN": "$CORS_ORIGIN"
 }
 EOF
 cat ./secrets.json
