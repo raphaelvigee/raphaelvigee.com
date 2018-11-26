@@ -9,6 +9,8 @@
   font-size: 1.5em;
   text-align: center;
   outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
   &:link, &:visited, &:hover, &:active {
     text-decoration: none !important;

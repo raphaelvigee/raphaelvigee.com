@@ -12,6 +12,8 @@
   font-size: 1.5em;
   margin-bottom: 1em;
   transition: .3s all;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
   &:focus {
     border: 3px solid $secondary;
