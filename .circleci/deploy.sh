@@ -30,9 +30,10 @@ cat >./secrets.json <<EOF
 {
   "NODE_ENV": "prod",
   "EMAIL": "contact@raphaelvigee.com",
-  "DOMAIN": $DOMAIN
+  "DOMAIN": "$DOMAIN"
 }
 EOF
+cat ./secrets.json
 
 serverless deploy
 cd ..
