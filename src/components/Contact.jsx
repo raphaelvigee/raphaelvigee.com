@@ -3,6 +3,8 @@ import Page from "./Page";
 import Title from "./Title";
 import {InputText, InputTextArea} from "./Form";
 import Button from "./Button";
+import cx from 'classnames';
+import styles from './Contact.scss';
 
 export default class Contact extends React.Component {
     constructor(props) {
@@ -12,6 +14,9 @@ export default class Contact extends React.Component {
             name: "",
             email: "",
             content: "",
+            response: null,
+            processing: false,
+            ok: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -24,25 +29,44 @@ export default class Contact extends React.Component {
     }
 
     async handleSubmit() {
-        if(this.isSubmitDisabled()) {
+        if (!this.canSubmit()) {
             return;
         }
 
-        const response = await fetch(process.env.CONTACT_FORM_URL, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                content: this.state.content,
-            })
+        this.setState({
+            processing: true,
         });
-        const data = await response.json();
 
-        console.log(data)
+        try {
+            const response = await fetch(process.env.CONTACT_FORM_URL, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.state.name,
+                    email: this.state.email,
+                    content: this.state.content,
+                })
+            });
+
+            const data = await response.json();
+
+            this.setState({
+                response: data,
+                ok: response.ok,
+            })
+        } catch (e) {
+            this.setState({
+                response: {error: "Unexpected error, please try again later"},
+                ok: false,
+            })
+        } finally {
+            this.setState({
+                processing: false,
+            })
+        }
     }
 
     render() {
@@ -55,23 +79,41 @@ export default class Contact extends React.Component {
         )
     }
 
-    isSubmitDisabled() {
-        if(this.state.name.length === 0) {
-            return true;
+    isValid() {
+        if (this.state.name.length === 0) {
+            return false;
         }
 
-        if(this.state.email.length === 0) {
-            return true;
+        if (this.state.email.length === 0) {
+            return false;
         }
 
-        if(this.state.content.length === 0) {
-            return true;
+        if (this.state.content.length === 0) {
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+    canSubmit() {
+        if (this.state.processing) {
+            return false
+        }
+
+        if (this.state.response && this.state.ok) {
+            return false
+        }
+
+        if (!this.isValid()) {
+            return false;
+        }
+
+        return true;
     }
 
     renderForm() {
+        const {ok, response} = this.state;
+
         return (
             <React.Fragment>
                 <InputText value={this.state.name}
@@ -84,7 +126,15 @@ export default class Contact extends React.Component {
                                onChange={(e) => this.handleChange('content', e)}
                                placeholder={"Message"}/>
 
-                <Button disabled={this.isSubmitDisabled()} onClick={this.handleSubmit} label={"Send"}/>
+                <div className={styles.holder}>
+                    <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={"Send"}/>
+
+                    {response && (
+                        <span className={cx(styles.message, ok && styles.success, !ok && styles.error)}>
+                            {ok ? 'Message sent, I\'ll be in touch!' : response.error}
+                        </span>
+                    )}
+                </div>
             </React.Fragment>
         )
     }
