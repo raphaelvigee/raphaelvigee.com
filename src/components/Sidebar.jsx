@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import styles from './Sidebar.scss';
 import Name from "./Name";
-import {Link, NavLink, Route} from "react-router-dom";
+import {Link, NavLink, Route, withRouter} from "react-router-dom";
 import GradientLine from "./GradientLine";
 import TiltRaccoon from "./TiltRaccoon";
 
@@ -23,7 +23,7 @@ function MenuItem({to, children: label}) {
     )
 }
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -32,6 +32,14 @@ export default class Sidebar extends React.Component {
         };
 
         this.toggleMenu = this.toggleMenu.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.setState({
+                menu: false
+            });
+        }
     }
 
     toggleMenu() {
@@ -94,3 +102,5 @@ export default class Sidebar extends React.Component {
         );
     }
 }
+
+export default withRouter(Sidebar);
