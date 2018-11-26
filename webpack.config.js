@@ -30,6 +30,14 @@ Encore
 
 const config = Encore.getWebpackConfig();
 
+config.module.rules.push({
+    test: /\.(pdf)$/,
+    loader: 'file-loader',
+    options: {
+        name: 'assets/cv/[name].[ext]',
+    }
+});
+
 config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
     template: 'src/app.html',
     meta: {

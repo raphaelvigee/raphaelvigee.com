@@ -1,7 +1,8 @@
 import React from 'react';
 import Page from "./Page";
 import Title from "./Title";
-import Button from "./Button";
+import {LinkButton} from "./Button";
+import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf'
 
 export default class Resume extends React.Component {
     render() {
@@ -9,11 +10,11 @@ export default class Resume extends React.Component {
             <Page>
                 <Title style={{marginBottom: 60}} label={"Resume"}/>
 
-                <Button href={"#"} label={"Resume"} />
+                <LinkButton href={CVShort} target={"_blank"} label={"Resume"}/>
 
-                <br/>
+                {/*<br/>*/}
 
-                <Button href={"#"} label={"Resume (2 pages)"} />
+                {/*<LinkButton href={CVShort} target={"_blank"} label={"Resume (2 pages)"}/>*/}
             </Page>
         )
     }

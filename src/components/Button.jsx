@@ -13,3 +13,11 @@ export default class Button extends React.Component {
         )
     }
 }
+
+export function LinkButton({label, ...rest}) {
+    return (
+        <a className={styles.btn} {...rest}>
+            {label}
+        </a>
+    )
+}
