@@ -11,7 +11,7 @@ export default class Education extends React.Component {
 
                 <Entry date={"17th November 2018"}
                        title={"2nd place in “Game Development” at SacHacks"}
-                       location={"SacHacks, Sacrament, USA"}/>
+                       location={"Sacramento, USA"}/>
 
                 <Entry date={"September 2016 - June 2020"}
                        title={"BSc Computer Science (Artificial Intelligence) with a Year in Industry"}
