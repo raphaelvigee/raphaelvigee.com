@@ -23,6 +23,7 @@ git add -A
 git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
 
 git push origin $TARGET_BRANCH
+cd ..
 
 cd aws
 cat >./secrets.json <<EOF
@@ -34,3 +35,4 @@ cat >./secrets.json <<EOF
 EOF
 
 serverless deploy
+cd ..
