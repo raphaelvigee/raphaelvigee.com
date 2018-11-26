@@ -19,7 +19,7 @@ yarn build
 cp -a build/. out/.
 
 mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
-./generate_structure.sh
+./.circleci/generate_structure.sh
 cd out
 
 git add -A
