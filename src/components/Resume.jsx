@@ -8,9 +8,9 @@ export default class Resume extends React.Component {
     render() {
         return (
             <Page>
-                <Title style={{marginBottom: 60}} label={"Resume"}/>
+                <Title style={{marginBottom: 60}} label={"Résumé"}/>
 
-                <LinkButton href={CVShort} target={"_blank"} label={"Resume"}/>
+                <LinkButton href={CVShort} target={"_blank"} label={"Résumé"}/>
 
                 {/*<br/>*/}
 

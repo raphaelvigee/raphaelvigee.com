@@ -92,7 +92,7 @@ class Sidebar extends React.Component {
                             <MenuItem to={'/'}>Home</MenuItem>
                             <MenuItem to={'/education'}>Education</MenuItem>
                             <MenuItem to={'/experiences'}>Experiences</MenuItem>
-                            <MenuItem to={'/resume'}>Resume</MenuItem>
+                            <MenuItem to={'/resume'}>Résumé</MenuItem>
                             <MenuItem to={'/contact'}>Contact</MenuItem>
                         </div>
                     </div>
