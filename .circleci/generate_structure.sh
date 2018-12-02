@@ -5,6 +5,7 @@ set -e
 paths=(
     "/education"
     "/experiences"
+    "/hacks"
     "/resume"
     "/contact"
 )
