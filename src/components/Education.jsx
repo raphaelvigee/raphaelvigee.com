@@ -9,7 +9,11 @@ export default class Education extends React.Component {
             <Page>
                 <Title style={{marginBottom: 60}} label={"Education"}/>
 
-                <Entry date={"17th November 2018"}
+                <Entry date={"1st December 2018"}
+                       title={"1st at MLH Local Hack Day"}
+                       location={"San Francisco, USA"}/>
+
+                 <Entry date={"17th November 2018"}
                        title={"2nd place in “Game Development” at SacHacks"}
                        location={"Sacramento, USA"}/>
 
