@@ -10,6 +10,7 @@ import ScrollToTop from "./ScrollTop";
 import Resume from "./Resume";
 import Contact from "./Contact";
 import cx from 'classnames';
+import Hacks from "./Hacks";
 
 export default class App extends React.Component {
     render() {
@@ -28,6 +29,7 @@ export default class App extends React.Component {
                                     <Switch>
                                         <Route path="/" exact component={Home}/>
                                         <Route path="/education" exact component={Education}/>
+                                        <Route path="/hacks" exact component={Hacks}/>
                                         <Route path="/experiences" exact component={Experiences}/>
                                         <Route path="/resume" exact component={Resume}/>
                                         <Route path="/contact" exact component={Contact}/>

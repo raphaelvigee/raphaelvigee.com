@@ -91,6 +91,7 @@ class Sidebar extends React.Component {
                         <div className={styles.container}>
                             <MenuItem to={'/'}>Home</MenuItem>
                             <MenuItem to={'/education'}>Education</MenuItem>
+                            <MenuItem to={'/hacks'}>Hacks</MenuItem>
                             <MenuItem to={'/experiences'}>Experiences</MenuItem>
                             <MenuItem to={'/resume'}>Résumé</MenuItem>
                             <MenuItem to={'/contact'}>Contact</MenuItem>
