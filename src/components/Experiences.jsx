@@ -53,7 +53,7 @@ export default class Experiences extends React.Component {
 
                 <ProjectEntry title={"Musish"}
                               link={'https://github.com/Musish/Musish'}
-                              description={"An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★500+"}
+                              description={"An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★1100+"}
                               tags={[TAG_REACT, TAG_NODE]}/>
 
                 <ProjectEntry title={"Risotto"}
