@@ -8,6 +8,7 @@ import ProjectEntry from "./ProjectEntry";
 const TAG_PHP = {name: "PHP"};
 const TAG_SYMFONY3 = {name: "Symfony 3"};
 const TAG_REACT = {name: "React"};
+const TAG_NODE = {name: "NodeJs"};
 const TAG_C = {name: "C"};
 const TAG_CPP = {name: "C++"};
 const TAG_JAVA = {name: "Java"};
@@ -50,9 +51,14 @@ export default class Experiences extends React.Component {
 
                 <SubTitle style={{marginTop: 60}} label={"Projects"}/>
 
+                <ProjectEntry title={"Musish"}
+                              link={'https://github.com/Musish/Musish'}
+                              description={"An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★1100+"}
+                              tags={[TAG_REACT, TAG_NODE]}/>
+
                 <ProjectEntry title={"Risotto"}
                               link={'https://github.com/raphaelvigee/risotto'}
-                              description={"A VM stack-based language, from scratch"}
+                              description={"A high lavel VM stack-based language, from scratch. Supports Objects & Generics"}
                               tags={[TAG_C, TAG_CPP]}/>
 
                 <ProjectEntry title={"StrollPlanner"}
