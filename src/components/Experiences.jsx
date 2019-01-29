@@ -30,7 +30,7 @@ export default class Experiences extends React.Component {
                        details={"Symfony 3 / ReactJs"}
                        location={"Windoo, Paris, France"}/>
 
-                <Entry date={"From November 2016"}
+                <Entry date={"November 2016 - March 2018"}
                        title={"Full Stack Web Developer & Mobile App Developer"}
                        details={"Symfony 3 / ReactJs / React Native"}
                        location={"Captain Fight, Bordeaux, France (Remote)"}/>
