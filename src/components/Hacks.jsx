@@ -9,13 +9,17 @@ export default class Education extends React.Component {
             <Page>
                 <Title style={{marginBottom: 60}} label={"Hacks"}/>
 
+                <Entry date={<>15<sup>th</sup>-17<sup>th</sup> February 2019</>}
+                       title={<>Finalist & “Best Deep Learning Project” at Treehacks</>}
+                       location={"Stanford, CA, USA"}/>
+
                 <Entry date={<>1<sup>st</sup> December 2018</>}
                        title={<>1<sup>st</sup> at MLH Local Hack Day</>}
-                       location={"San Francisco, USA"}/>
+                       location={"San Francisco, CA, USA"}/>
 
                 <Entry date={<>17<sup>th</sup> November 2018</>}
                        title={<>2<sup>nd</sup> place in “Game Development” at SacHacks</>}
-                       location={"Sacramento, USA"}/>
+                       location={"Sacramento, CA, USA"}/>
 
                 <Entry date={<>2<sup>nd</sup> December 2017</>}
                        title={"“Best Project Idea” at MLH - Local Hack Day 2017"}
