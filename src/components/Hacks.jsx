@@ -11,7 +11,7 @@ export default class Education extends React.Component {
 
                 <Entry date={<>15<sup>th</sup> - 17<sup>th</sup> February 2019</>}
                        title={<>Finalist & “Best Deep Learning Hack” at Treehacks</>}
-                       location={"Stanford, CA, USA"}/>
+                       location={"Stanford University, CA, USA"}/>
 
                 <Entry date={<>1<sup>st</sup> December 2018</>}
                        title={<>1<sup>st</sup> at MLH Local Hack Day</>}
