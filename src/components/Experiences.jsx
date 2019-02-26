@@ -58,7 +58,7 @@ export default class Experiences extends React.Component {
 
                 <ProjectEntry title={"Risotto"}
                               link={'https://github.com/raphaelvigee/risotto'}
-                              description={"A high lavel VM stack-based language, from scratch. Supports Objects & Generics"}
+                              description={"A high level VM stack-based language, from scratch. Supports Objects & Generics"}
                               tags={[TAG_C, TAG_CPP]}/>
 
                 <ProjectEntry title={"StrollPlanner"}
