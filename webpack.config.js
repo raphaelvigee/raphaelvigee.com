@@ -1,3 +1,4 @@
+/* tslint:disable */
 const webpack = require('webpack');
 const Encore = require('@symfony/webpack-encore');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,7 +8,7 @@ Encore
     .setOutputPath('build/')
     .setPublicPath('/')
 
-    .addEntry('app', './src/index.jsx')
+    .addEntry('app', './src/index.tsx')
 
     .enableSingleRuntimeChunk()
 
@@ -27,6 +28,7 @@ Encore
 
     .enableReactPreset()
     .enableSassLoader()
+    .enableTypeScriptLoader()
 ;
 
 const config = Encore.getWebpackConfig();
@@ -39,7 +41,7 @@ config.module.rules.push({
     }
 });
 
-config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
+config.plugins.push(new HtmlWebpackPlugin({
     template: 'src/app.html',
     title: 'Raphaël Vigee',
     meta: {
@@ -88,5 +90,11 @@ config.plugins.push(new FaviconsWebpackPlugin({
         windows: false
     }
 }));
+
+config.plugins.push(
+    new webpack.WatchIgnorePlugin([
+        /scss\.d\.ts$/
+    ]),
+);
 
 module.exports = config;

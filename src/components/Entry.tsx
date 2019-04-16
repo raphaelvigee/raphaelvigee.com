@@ -1,7 +1,15 @@
-import React from "react";
-import styles from './Entry.scss';
+import {ReactNode} from 'react';
+import * as React from 'react';
+import * as styles from './Entry.scss';
 
-export default function Entry({date, title, details, location}) {
+interface IEntry {
+    date?: ReactNode;
+    title?: ReactNode;
+    details?: ReactNode;
+    location?: ReactNode;
+}
+
+const Entry: React.FC<IEntry> = ({date = null, title = null, details = null, location = null}) => {
     return (
         <div className={styles.entry}>
             {date && (
@@ -28,5 +36,7 @@ export default function Entry({date, title, details, location}) {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
+
+export default Entry;

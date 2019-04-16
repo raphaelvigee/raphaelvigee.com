@@ -1,11 +1,10 @@
-import React from 'react';
 import cx from 'classnames';
-
-import styles from './Sidebar.scss';
-import Name from "./Name";
-import {Link, NavLink, Route, withRouter} from "react-router-dom";
-import GradientLine from "./GradientLine";
-import TiltRaccoon from "./TiltRaccoon";
+import * as React from 'react';
+import {Link, NavLink, Route, RouteComponentProps, withRouter} from 'react-router-dom';
+import GradientLine from './GradientLine';
+import Name from './Name';
+import * as styles from './Sidebar.scss';
+import TiltRaccoon from './TiltRaccoon';
 
 function MenuItem({to, children: label}) {
     return (
@@ -20,10 +19,18 @@ function MenuItem({to, children: label}) {
                 <GradientLine show={!!match} width={'60%'}/>
             </NavLink>
         )}/>
-    )
+    );
 }
 
-class Sidebar extends React.Component {
+interface ISidebar extends RouteComponentProps {
+    homepage: boolean;
+}
+
+interface ISSidebar {
+    menu: boolean;
+}
+
+class Sidebar extends React.Component<ISidebar, ISSidebar> {
     constructor(props) {
         super(props);
 
@@ -34,24 +41,27 @@ class Sidebar extends React.Component {
         this.toggleMenu = this.toggleMenu.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
+    public componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             this.setState({
-                menu: false
+                menu: false,
             });
         }
     }
 
-    toggleMenu() {
-        this.setState(state => ({
+    public toggleMenu() {
+        this.setState((state) => ({
             menu: !state.menu,
-        }))
+        }));
     }
 
-    render() {
+    public render() {
+        const {homepage} = this.props;
+        const {menu} = this.state;
+
         return (
             <React.Fragment>
-                <div className={cx(styles.sidebar, this.props.homepage && styles.homepage, this.state.menu && styles.active)}>
+                <div className={cx(styles.sidebar, homepage && styles.homepage, menu && styles.active)}>
                     <div className={cx(styles.content)}>
                         <div className={cx(styles.menuToggle)}
                              onClick={this.toggleMenu}>
@@ -59,7 +69,7 @@ class Sidebar extends React.Component {
                             <div className={styles.bar3}/>
                             <div className={styles.bar1}/>
                         </div>
-                        <Name homepage={this.props.homepage}/>
+                        <Name homepage={homepage}/>
 
                         <div className={cx(styles.raccoonContainer)}>
                             <Link to={'/contact'}>
@@ -71,14 +81,14 @@ class Sidebar extends React.Component {
                         </div>
 
                         <div className={styles.social}>
-                            <a href="http://github.com/raphaelvigee" target={"_blank"}>
-                                <span className={cx(styles.icon, styles["icon-github"])}/>
+                            <a href='http://github.com/raphaelvigee' target={'_blank'}>
+                                <span className={cx(styles.icon, styles['icon-github'])}/>
                             </a>
-                            <a href="http://stackoverflow.com/users/3212099/rapha%C3%ABl-vig%C3%A9e" target={"_blank"}>
-                                <span className={cx(styles.icon, styles["icon-stack-overflow"])}/>
+                            <a href='http://stackoverflow.com/users/3212099/rapha%C3%ABl-vig%C3%A9e' target={'_blank'}>
+                                <span className={cx(styles.icon, styles['icon-stack-overflow'])}/>
                             </a>
-                            <a href="http://linkedin.com/in/raphaelvigee" target={"_blank"}>
-                                <span className={cx(styles.icon, styles["icon-linkedin-square"])}/>
+                            <a href='http://linkedin.com/in/raphaelvigee' target={'_blank'}>
+                                <span className={cx(styles.icon, styles['icon-linkedin-square'])}/>
                             </a>
                         </div>
 
@@ -98,7 +108,7 @@ class Sidebar extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className={cx(styles.sidebarSpacer, this.props.homepage && styles.homepage)}/>
+                <div className={cx(styles.sidebarSpacer, homepage && styles.homepage)}/>
             </React.Fragment>
         );
     }

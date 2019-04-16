@@ -1,34 +1,44 @@
-import React from 'react';
-import Page from "./Page";
-import Title from "./Title";
-import {InputText, InputTextArea} from "./Form";
-import Button from "./Button";
 import cx from 'classnames';
-import styles from './Contact.scss';
+import * as React from 'react';
+import Button from './Button';
+import * as styles from './Contact.scss';
+import {InputText, InputTextArea} from './Form';
+import Page from './Page';
+import Title from './Title';
 
-export default class Contact extends React.Component {
+interface ISContact {
+    name: string;
+    email: string;
+    content: string;
+    response: any;
+    processing: boolean;
+    ok: boolean;
+}
+
+export default class Contact extends React.Component<{}, ISContact> {
     constructor(props) {
         super(props);
 
         this.state = {
-            name: "",
-            email: "",
-            content: "",
-            response: null,
-            processing: false,
+            content: '',
+            email: '',
+            name: '',
             ok: false,
+            processing: false,
+            response: null,
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(name, event) {
+    public handleChange(name: 'name'|'content'|'email', event: any) {
+        // @ts-ignore
         this.setState({
             [name]: event.target.value,
-        })
+        });
     }
 
-    async handleSubmit() {
+    public async handleSubmit() {
         if (!this.canSubmit()) {
             return;
         }
@@ -38,48 +48,48 @@ export default class Contact extends React.Component {
         });
 
         try {
-            const response = await fetch(process.env.CONTACT_FORM_URL, {
-                method: "POST",
+            const response = await fetch(process.env.CONTACT_FORM_URL as string, {
+                body: JSON.stringify({
+                    content: this.state.content,
+                    email: this.state.email,
+                    name: this.state.name,
+                }),
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name: this.state.name,
-                    email: this.state.email,
-                    content: this.state.content,
-                })
+                method: 'POST',
             });
 
             const data = await response.json();
 
             this.setState({
-                response: data,
                 ok: response.ok,
-            })
+                response: data,
+            });
         } catch (e) {
             this.setState({
-                response: {error: "Unexpected error, please try again later"},
                 ok: false,
-            })
+                response: {error: 'Unexpected error, please try again later'},
+            });
         } finally {
             this.setState({
                 processing: false,
-            })
+            });
         }
     }
 
-    render() {
+    public render() {
         return (
             <Page>
-                <Title style={{marginBottom: 60}} label={"Contact"}/>
+                <Title style={{marginBottom: 60}} label={'Contact'}/>
 
                 {this.renderForm()}
             </Page>
-        )
+        );
     }
 
-    isValid() {
+    public isValid() {
         if (this.state.name.length === 0) {
             return false;
         }
@@ -95,13 +105,13 @@ export default class Contact extends React.Component {
         return true;
     }
 
-    canSubmit() {
+    public canSubmit() {
         if (this.state.processing) {
-            return false
+            return false;
         }
 
         if (this.state.response && this.state.ok) {
-            return false
+            return false;
         }
 
         if (!this.isValid()) {
@@ -111,23 +121,23 @@ export default class Contact extends React.Component {
         return true;
     }
 
-    renderForm() {
+    public renderForm() {
         const {ok, response} = this.state;
 
         return (
             <React.Fragment>
                 <InputText value={this.state.name}
                            onChange={(e) => this.handleChange('name', e)}
-                           placeholder={"Name"}/>
+                           placeholder={'Name'}/>
                 <InputText value={this.state.email}
                            onChange={(e) => this.handleChange('email', e)}
-                           placeholder={"Email"}/>
+                           placeholder={'Email'}/>
                 <InputTextArea value={this.state.content}
                                onChange={(e) => this.handleChange('content', e)}
-                               placeholder={"Message"}/>
+                               placeholder={'Message'}/>
 
                 <div className={styles.holder}>
-                    <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={"Send"}/>
+                    <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={'Send'}/>
 
                     {response && (
                         <span className={cx(styles.message, ok && styles.success, !ok && styles.error)}>
@@ -136,6 +146,6 @@ export default class Contact extends React.Component {
                     )}
                 </div>
             </React.Fragment>
-        )
+        );
     }
 }
