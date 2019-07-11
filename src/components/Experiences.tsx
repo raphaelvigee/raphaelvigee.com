@@ -51,7 +51,7 @@ const Experiences: React.FC = () => (
 
     <ProjectEntry title={'Musish'}
                   link={'https://github.com/Musish/Musish'}
-                  description={'An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★1400+'}
+                  description={'An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★2000+'}
                   tags={[TAG_REACT, TAG_NODE]}/>
 
     <ProjectEntry title={'Risotto'}
