@@ -21,7 +21,7 @@ const Experiences: React.FC = () => (
 
     <Entry date={'August 2018 - July 2019'}
            title={'Software Engineer Intern'}
-           details={'DevOps / ReactJs / NodeJs / Python / Go'}
+           details={'Golang / Kubernetes / ReactJs / NodeJs / Python'}
            location={'Cisco, San Jose, USA'}/>
 
     <Entry date={'June - July 2017'}
