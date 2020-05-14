@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 import * as React from 'react';
-import * as styles from './Entry.scss';
+import styles from './Entry.scss';
 
 interface IEntry {
     date?: ReactNode;

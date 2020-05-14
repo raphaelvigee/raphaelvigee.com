@@ -1,7 +1,7 @@
 import * as React from "react";
 import {NavLink, NavLinkProps} from "react-router-dom";
 
-import * as styles from "./Button.scss";
+import styles from "./Button.scss";
 
 interface IProps extends NavLinkProps {
     label: string;

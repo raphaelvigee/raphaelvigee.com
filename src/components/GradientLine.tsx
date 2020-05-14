@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import * as React from 'react';
-import * as styles from './GradientLine.scss';
+import styles from './GradientLine.scss';
 
 interface IGradientLine {
     width?: number | string;

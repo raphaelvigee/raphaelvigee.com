@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import * as React from 'react';
 import Button from './Button';
-import * as styles from './Contact.scss';
+import styles from './Contact.scss';
 import {InputText, InputTextArea} from './Form';
 import Page from './Page';
 import Title from './Title';

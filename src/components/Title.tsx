@@ -1,7 +1,7 @@
 import {HTMLAttributes} from 'react';
 import * as React from 'react';
 import GradientLine from './GradientLine';
-import * as styles from './Title.scss';
+import styles from './Title.scss';
 
 interface ITitle extends HTMLAttributes<HTMLDivElement> {
     label: string;

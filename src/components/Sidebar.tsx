@@ -3,7 +3,7 @@ import * as React from 'react';
 import {Link, NavLink, Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import GradientLine from './GradientLine';
 import Name from './Name';
-import * as styles from './Sidebar.scss';
+import styles from './Sidebar.scss';
 import TiltRaccoon from './TiltRaccoon';
 
 function MenuItem({to, children: label}) {

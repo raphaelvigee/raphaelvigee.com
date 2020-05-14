@@ -1,6 +1,6 @@
 import {HTMLAttributes} from 'react';
 import * as React from 'react';
-import * as styles from './SubTitle.scss';
+import styles from './SubTitle.scss';
 
 interface ISubTitle extends HTMLAttributes<HTMLHeadingElement> {
     label: string;

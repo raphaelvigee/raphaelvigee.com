@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import * as styles from "./Home.scss";
+import styles from "./Home.scss";
 import LinkButton from "./LinkButton";
 
 const Home: React.FC<{}> = () => (

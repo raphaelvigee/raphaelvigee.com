@@ -3,7 +3,7 @@ import Sidebar from './Sidebar';
 
 import cx from 'classnames';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
-import * as styles from './App.scss';
+import styles from './App.scss';
 import Contact from './Contact';
 import Education from './Education';
 import Experiences from './Experiences';

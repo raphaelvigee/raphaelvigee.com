@@ -1,6 +1,6 @@
 import {InputHTMLAttributes, TextareaHTMLAttributes} from 'react';
 import * as React from 'react';
-import * as styles from './Form.scss';
+import styles from './Form.scss';
 
 export const InputText: React.FC<InputHTMLAttributes<HTMLInputElement>> = (props) => (
     <input type='text' className={styles.textInput} {...props} />

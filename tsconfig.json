@@ -8,9 +8,11 @@
     "module": "es6",            // specify module code generation
     "jsx": "react",             // use typescript to transpile jsx to js
     "target": "es5",            // specify ECMAScript target version
-    "lib": [ "dom", "es2015" ]
+    "lib": [ "dom", "es2015" ],
+    "typeRoots": ["src/types"]
   },
   "include": [
+    "./node_modules/@types",
     "./src/**/*"
   ]
 }
