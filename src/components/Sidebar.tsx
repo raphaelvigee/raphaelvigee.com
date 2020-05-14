@@ -72,11 +72,8 @@ class Sidebar extends React.Component<ISidebar, ISSidebar> {
                         <Name homepage={homepage}/>
 
                         <div className={cx(styles.raccoonContainer)}>
-                            <Link to={'/contact'}>
+                            <Link to={'/'}>
                                 <TiltRaccoon/>
-                            </Link>
-                            <Link to={'/contact'} className={styles.label}>
-                                Contact
                             </Link>
                         </div>
 
