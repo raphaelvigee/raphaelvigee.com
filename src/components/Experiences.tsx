@@ -19,7 +19,7 @@ const Experiences: React.FC = () => (
 
         <SubTitle label={'Jobs'}/>
 
-    <Entry date={'July 2018 - Present'}
+    <Entry date={'July 2019 - Present'}
            title={'Software Engineer'}
            details={'Golang / Kubernetes / ReactJs / NodeJs / Python'}
            location={'Cisco, Remote'}/>
