@@ -12,9 +12,9 @@ const Home: React.FC = () => (
         </div>
         <div className={styles.bottom}>
             <div className={styles.buttonsContainer}>
-                <LinkButton to={'/education'} label={'Education'}/>
-                <LinkButton to={'/hacks'} label={'Hacks'}/>
                 <LinkButton to={'/experiences'} label={'Experiences'}/>
+                <LinkButton to={'/hacks'} label={'Hacks'}/>
+                <LinkButton to={'/education'} label={'Education'}/>
                 <LinkButton to={'/resume'} label={'Résumé'}/>
                 <LinkButton to={'/contact'} label={'Contact'}/>
             </div>

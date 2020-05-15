@@ -9,7 +9,7 @@ interface IVanillaTilt extends HTMLImageElement {
     vanillaTilt: any;
 }
 
-const TiltRaccoon: React.FC = () => {
+const InteractiveRaccoon: React.FC = () => {
     const img = createRef<IVanillaTilt>();
 
     useEffect(() => {
@@ -29,4 +29,4 @@ const TiltRaccoon: React.FC = () => {
     return <img src={raccoon} alt='Raccoon' ref={img}/>;
 };
 
-export default TiltRaccoon;
+export default InteractiveRaccoon;

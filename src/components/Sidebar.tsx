@@ -2,9 +2,9 @@ import cx from 'classnames';
 import * as React from 'react';
 import {Link, NavLink, Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import GradientLine from './GradientLine';
+import InteractiveRaccoon from './InteractiveRaccoon';
 import Name from './Name';
 import styles from './Sidebar.scss';
-import TiltRaccoon from './TiltRaccoon';
 
 function MenuItem({to, children: label}) {
     return (
@@ -73,7 +73,7 @@ class Sidebar extends React.Component<ISidebar, ISSidebar> {
 
                         <div className={cx(styles.raccoonContainer)}>
                             <Link to={'/'}>
-                                <TiltRaccoon/>
+                                <InteractiveRaccoon />
                             </Link>
                         </div>
 
@@ -97,9 +97,9 @@ class Sidebar extends React.Component<ISidebar, ISSidebar> {
                     <div className={styles.menu}>
                         <div className={styles.container}>
                             <MenuItem to={'/'}>Home</MenuItem>
-                            <MenuItem to={'/education'}>Education</MenuItem>
-                            <MenuItem to={'/hacks'}>Hacks</MenuItem>
                             <MenuItem to={'/experiences'}>Experiences</MenuItem>
+                            <MenuItem to={'/hacks'}>Hacks</MenuItem>
+                            <MenuItem to={'/education'}>Education</MenuItem>
                             <MenuItem to={'/resume'}>Résumé</MenuItem>
                             <MenuItem to={'/contact'}>Contact</MenuItem>
                         </div>
