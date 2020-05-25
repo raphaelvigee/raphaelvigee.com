@@ -11,12 +11,31 @@ import Hacks from './Hacks';
 import Home from './Home';
 import Resume from './Resume';
 import ScrollToTop from './ScrollTop';
+import cmds from './Terminal/commands';
+import Terminal from './Terminal/Terminal';
+
+const motd = <pre>
+{`
+  ___           _             _  __   ___
+ | _ \\__ _ _ __| |_  __ _ ___| | \\ \\ / (_)__ _ ___ ___
+ |   / _\` | '_ \\ ' \\/ _\` / -_) |  \\ V /| / _\` / -_) -_)
+ |_|_\\__,_| .__/_||_\\__,_\\___|_|   \\_/ |_\\__, \\___\\___|
+      _   |_|                            |___/
+ __ _/ | /  \\
+ \\ V / || () |
+  \\_/|_(_)__/
+
+`}
+</pre>;
 
 const App: React.FC = () => {
     return (
         <Router>
             <ScrollToTop>
-                <Route children={({location}) => {
+                <Switch>
+                    <Route path='/x' exact render={() => <Terminal motd={motd} cmds={cmds} />}/>
+
+                    <Route children={({location}) => {
                     const homepage = location.pathname === '/';
 
                     return (
@@ -38,6 +57,7 @@ const App: React.FC = () => {
                         </div>
                     );
                 }}/>
+                </Switch>
             </ScrollToTop>
         </Router>
     );
