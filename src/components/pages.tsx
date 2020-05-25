@@ -21,7 +21,7 @@ const Pages = [
         component: Experiences,
     },
     {
-        name: 'Resume',
+        name: 'Résumé',
         path: 'resume',
         component: Resume,
     },

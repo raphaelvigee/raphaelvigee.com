@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TiltRaccoon from '../TiltRaccoon';
-import {getFs, IFsNode, isFile, isFolder, join, pathToString, stringToPath} from './fs';
+import {getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath} from './fs';
 import {ICommand} from './utils';
 
 export const cmdEcho: ICommand = {
@@ -31,14 +31,11 @@ function nodeHelper(
     strPath: string,
     cb: (node: IFsNode, absPath: string[]) => void,
 ) {
-    const isPathAbs = strPath[0] === '/';
-    const path = stringToPath(strPath);
-
-    const absPath = isPathAbs ? path : join(cwd, path);
+    const absPath = parsePath(cwd, strPath);
     const node = getFs(fs, absPath);
 
     if (!node) {
-        write(`${pathToString(path)}: not found`);
+        write(`${absPath}: not found`);
         return;
     }
 

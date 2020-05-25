@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Link, NavLink, Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import GradientLine from './GradientLine';
 import Name from './Name';
+import Pages from './pages';
 import styles from './Sidebar.scss';
 import TiltRaccoon from './TiltRaccoon';
 
@@ -97,11 +98,7 @@ class Sidebar extends React.Component<ISidebar, ISSidebar> {
                     <div className={styles.menu}>
                         <div className={styles.container}>
                             <MenuItem to={'/'}>Home</MenuItem>
-                            <MenuItem to={'/education'}>Education</MenuItem>
-                            <MenuItem to={'/hacks'}>Hacks</MenuItem>
-                            <MenuItem to={'/experiences'}>Experiences</MenuItem>
-                            <MenuItem to={'/resume'}>Résumé</MenuItem>
-                            <MenuItem to={'/contact'}>Contact</MenuItem>
+                                {Pages.map((p) => <MenuItem key={p.path} to={`/${p.path}`}>{p.name}</MenuItem>)}
                         </div>
                     </div>
                 </div>

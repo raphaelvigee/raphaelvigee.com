@@ -66,7 +66,7 @@ const fs: IFsNode = new FsFolder({
 export default function App() {
     useEffect(() => {
         // tslint:disable-next-line:no-console
-        console.info(`Since you can read this, you should checkout ${window.location.origin}/x ;)`);
+        console.info(`Since you are reading this, you should checkout ${window.location.origin}/x ;)`);
     }, []);
 
     return (
@@ -88,11 +88,8 @@ export default function App() {
                             <div className={styles.right}>
                                 <Switch>
                                     <Route path='/' exact component={Home}/>
-                                    <Route path='/education' exact component={Education}/>
-                                    <Route path='/hacks' exact component={Hacks}/>
-                                    <Route path='/experiences' exact component={Experiences}/>
-                                    <Route path='/resume' exact component={Resume}/>
-                                    <Route path='/contact' exact component={Contact}/>
+                                    {Pages.map((p) =>
+                                        <Route key={p.path} path={`/${p.path}`} exact component={p.component}/>)}
                                     <Redirect to='/'/>
                                 </Switch>
                             </div>

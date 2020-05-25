@@ -30,6 +30,17 @@ interface ILine {
     content: ReactNode;
 }
 
+function findCmds(cmds: ICommand[], str: string) {
+    const candidates: ICommand[] = [];
+    for (const cmd of cmds) {
+        if (cmd.name.startsWith(str)) {
+            candidates.push(cmd);
+        }
+    }
+
+    return candidates;
+}
+
 export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null, initCmds = []}: ITerminal) {
     const [lines, setLines] = useState<ILine[]>([]);
     const [currentLine, setCurrentLine] = useState('');
@@ -79,6 +90,23 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                 case 'ArrowRight':
                 case 'ArrowUp':
                 case 'ArrowDown':
+                    break;
+                case 'Tab':
+                    const [name, ...rest] = currentLine.split(' ');
+                    console.log('name', name, typeof name);
+                    console.log('rest', rest);
+
+                    if (!currentLine.includes(' ')) {
+                        const candidates = findCmds(cmds, name);
+                        console.log('candidates', candidates);
+
+                        if (candidates.length === 1) {
+                            setCurrentLine(`${candidates[0].name} `);
+                        }
+
+                        break;
+                    }
+
                     break;
                 case 'Enter':
                     writeLine(true, currentLine);

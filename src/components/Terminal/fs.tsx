@@ -87,3 +87,10 @@ export function getFs(fs: IFsNode, targetPath: string[]) {
 
     return node;
 }
+
+export function parsePath(cwd: string[], strPath: string) {
+    const isPathAbs = strPath[0] === '/';
+    const path = stringToPath(strPath);
+
+    return isPathAbs ? path : join(cwd, path);
+}
