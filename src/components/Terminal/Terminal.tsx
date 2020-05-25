@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import useEventListener from '../../hooks/useEventListener';
 import {IFsNode} from './fs';
 import styles from './Terminal.scss';
@@ -93,12 +93,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     break;
                 case 'Tab':
                     const [name, ...rest] = currentLine.split(' ');
-                    console.log('name', name, typeof name);
-                    console.log('rest', rest);
 
                     if (!currentLine.includes(' ')) {
                         const candidates = findCmds(cmds, name);
-                        console.log('candidates', candidates);
 
                         if (candidates.length === 1) {
                             setCurrentLine(`${candidates[0].name} `);

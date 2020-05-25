@@ -1,18 +1,13 @@
 import {useEffect} from 'react';
 import * as React from 'react';
-import Pages from './pages';
+import {Pages} from './content';
 import Sidebar from './Sidebar';
 
 import cx from 'classnames';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf';
 import styles from './App.scss';
-import Contact from './Contact';
-import Education from './Education';
-import Experiences from './Experiences';
-import Hacks from './Hacks';
 import Home from './Home';
-import Resume from './Resume';
 import ScrollToTop from './ScrollTop';
 import cmds from './Terminal/commands';
 import {catOpen, FsFile, FsFolder, IFsNode} from './Terminal/fs';
@@ -78,24 +73,24 @@ export default function App() {
                     }/>
 
                     <Route children={({location}) => {
-                    const homepage = location.pathname === '/';
+                        const homepage = location.pathname === '/';
 
-                    return (
-                        <div className={cx(styles.app, homepage && styles.homepage)}>
-                            <div className={styles.left}>
-                                <Sidebar homepage={homepage}/>
+                        return (
+                            <div className={cx(styles.app, homepage && styles.homepage)}>
+                                <div className={styles.left}>
+                                    <Sidebar homepage={homepage}/>
+                                </div>
+                                <div className={styles.right}>
+                                    <Switch>
+                                        <Route path='/' exact component={Home}/>
+                                        {Pages.map((p) =>
+                                            <Route key={p.path} path={`/${p.path}`} exact component={p.component}/>)}
+                                        <Redirect to='/'/>
+                                    </Switch>
+                                </div>
                             </div>
-                            <div className={styles.right}>
-                                <Switch>
-                                    <Route path='/' exact component={Home}/>
-                                    {Pages.map((p) =>
-                                        <Route key={p.path} path={`/${p.path}`} exact component={p.component}/>)}
-                                    <Redirect to='/'/>
-                                </Switch>
-                            </div>
-                        </div>
-                    );
-                }}/>
+                        );
+                    }}/>
                 </Switch>
             </ScrollToTop>
         </Router>
