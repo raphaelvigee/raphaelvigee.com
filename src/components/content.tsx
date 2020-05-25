@@ -190,8 +190,8 @@ export const ProjectExperiences = [
     },
     {
         title: 'Risotto',
-        link: 'https://github.com/raphaelvigee/risotto',
-        description: 'A high level VM stack-based language, from scratch. Supports Objects & Generics',
+        link: 'https://github.com/risotto/risotto',
+        description: 'A high level VM stack-based language, from scratch.',
         tags: [TAG_C, TAG_CPP],
     },
     {

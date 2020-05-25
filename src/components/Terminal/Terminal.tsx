@@ -45,7 +45,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     const [lines, setLines] = useState<ILine[]>([]);
     const [currentLine, setCurrentLine] = useState('');
     const [cwd, setCwd] = useState<string[]>(initCwd);
-    const ref = useRef<HTMLDivElement>(null);
+    const [running, setRunning] = useState(false);
+    const bottomRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const writeLine = useCallback((input: boolean, c: ReactNode) =>
         setLines((l) => [...l, {input, content: c}]), [setLines]);
@@ -107,7 +109,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     break;
                 case 'Enter':
                     writeLine(true, currentLine);
+                    setRunning(true);
                     runCmdWithContext(currentLine);
+                    setRunning(false);
                     setCurrentLine('');
                     break;
                 case 'Backspace':
@@ -131,16 +135,23 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     useEventListener('keydown', cb);
     useEffect(() => {
-        if (ref.current) {
-            ref.current.scrollIntoView({behavior: 'smooth'});
+        if (bottomRef.current) {
+            bottomRef.current.scrollIntoView({behavior: 'smooth'});
         }
     }, [lines]);
 
+    function onTerminalClick() {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }
+
     return (
-        <div className={styles.terminal}>
+        <div className={styles.terminal} onClick={onTerminalClick}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
-            <Line prompt={true} content={<>{currentLine}<Caret /></>} />
-            <div ref={ref} />
+            {!running && <Line prompt={true} content={<>{currentLine}<Caret /></>} />}
+            <input type='text' className={styles.hiddenInput} ref={inputRef} />
+            <div ref={bottomRef} />
         </div>
     );
 }
