@@ -8,6 +8,7 @@ paths=(
     "/hacks"
     "/resume"
     "/contact"
+    "/x"
 )
 
 for p in "${paths[@]}"
