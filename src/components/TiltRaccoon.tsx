@@ -26,7 +26,7 @@ const TiltRaccoon: React.FC = () => {
         };
     }, []);
 
-    return <img src={raccoon} alt='Raccoon' ref={img}/>;
+    return <img style={{width: '100%'}} src={raccoon} alt='Raccoon' ref={img}/>;
 };
 
 export default TiltRaccoon;

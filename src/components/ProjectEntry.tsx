@@ -31,7 +31,7 @@ const ProjectEntry: React.FC<IProjectEntry> = ({title, link, description, tags =
                 ) : title}
             </div>
 
-            <div>
+            <div className={styles.description}>
                 {description}
             </div>
 
