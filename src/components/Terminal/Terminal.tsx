@@ -1,7 +1,9 @@
-import {ReactNode, useCallback, useEffect, useState} from 'react';
 import * as React from 'react';
+import {ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import useEventListener from '../../hooks/useEventListener';
+import {IFsNode} from './fs';
 import styles from './Terminal.scss';
+import {ICommand, runCommand} from './utils';
 
 function Line({prompt, content}: {prompt: boolean, content: ReactNode}) {
     return (
@@ -15,20 +17,12 @@ function Caret() {
     return <div className={styles.caret}>&nbsp;</div>;
 }
 
-export interface IRunProps {
-    write: (c: ReactNode) => void;
-    line: string;
-}
-
-export interface ICommand {
-    name: string;
-    run: (cmdName: string, cmdArgs: string, props: IRunProps) => void;
-}
-
 interface ITerminal {
     cmds: ICommand[];
     initCmds?: string[];
     motd?: ReactNode;
+    fs: IFsNode;
+    initCwd?: string[];
 }
 
 interface ILine {
@@ -36,31 +30,38 @@ interface ILine {
     content: ReactNode;
 }
 
-function runCommand(commands: ICommand[], props: IRunProps) {
-    const [cmdName, ...cmdArgsParts] = props.line.split(' ');
-    const cmdArgs = cmdArgsParts.join(' ');
-
-    if (!cmdName) {
-        return;
-    }
-
-    for (const cmd of commands) {
-        if (cmdName === cmd.name) {
-            cmd.run(cmdName, cmdArgs, props);
-            return;
-        }
-    }
-
-    props.write(`${cmdName}: command not found`);
-}
-
-export default function Terminal({cmds, motd = null, initCmds = []}: ITerminal) {
+export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null, initCmds = []}: ITerminal) {
     const [lines, setLines] = useState<ILine[]>([]);
     const [currentLine, setCurrentLine] = useState('');
+    const [cwd, setCwd] = useState<string[]>(initCwd);
+    const ref = useRef<HTMLDivElement>(null);
 
     const writeLine = useCallback((input: boolean, c: ReactNode) =>
         setLines((l) => [...l, {input, content: c}]), [setLines]);
     const writeNonPrompt = (c: ReactNode) => writeLine(false, c);
+
+    const cmds = useMemo(() => {
+        return [
+            ...userCmds,
+            {
+                name: 'help',
+                run: () => {
+                    for (const cmd of cmds) {
+                        writeNonPrompt(cmd.name);
+                    }
+                },
+            },
+        ];
+    }, [userCmds]);
+
+    const runCmdWithContext = (l: string) => runCommand(cmds, {
+        clear: () => setLines([]),
+        cwd,
+        fs,
+        line: l,
+        setCwd,
+        write: writeNonPrompt,
+    });
 
     const cb = useCallback(
         (event: KeyboardEvent) => {
@@ -81,10 +82,7 @@ export default function Terminal({cmds, motd = null, initCmds = []}: ITerminal) 
                     break;
                 case 'Enter':
                     writeLine(true, currentLine);
-                    runCommand(cmds, {
-                        line: currentLine,
-                        write: writeNonPrompt,
-                    });
+                    runCmdWithContext(currentLine);
                     setCurrentLine('');
                     break;
                 case 'Backspace':
@@ -102,19 +100,22 @@ export default function Terminal({cmds, motd = null, initCmds = []}: ITerminal) 
         }
 
         for (const l of initCmds) {
-            runCommand(cmds, {
-                line: l,
-                write: writeNonPrompt,
-            });
+            runCmdWithContext(l);
         }
     }, []);
 
     useEventListener('keydown', cb);
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.scrollIntoView({behavior: 'smooth'});
+        }
+    }, [lines]);
 
     return (
         <div className={styles.terminal}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
             <Line prompt={true} content={<>{currentLine}<Caret /></>} />
+            <div ref={ref} />
         </div>
     );
 }

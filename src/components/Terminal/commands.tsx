@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {Redirect} from 'react-router';
-import {ICommand} from './Terminal';
+import TiltRaccoon from '../TiltRaccoon';
+import {getFs, IFsNode, isFile, isFolder, join, pathToString, stringToPath} from './fs';
+import {ICommand} from './utils';
 
 export const cmdEcho: ICommand = {
     name: 'echo',
@@ -11,14 +12,124 @@ export const cmdEcho: ICommand = {
 
 export const cmdCd: ICommand = {
     name: 'cd',
-    run(_, args, {write}) {
-        if (args === '/') {
-            write(<Redirect to={'/'} />);
-            return;
-        }
+    run(_, args, {cwd, setCwd, write, fs}) {
+        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+            if (isFolder(node)) {
+                setCwd(absPath);
+                return;
+            }
 
-        write(`${args}: not found`);
+            write(`${pathToString(absPath)}: not a directory`);
+        });
     },
 };
 
-export default [cmdEcho, cmdCd];
+function nodeHelper(
+    write,
+    fs: IFsNode,
+    cwd: string[],
+    strPath: string,
+    cb: (node: IFsNode, absPath: string[]) => void,
+) {
+    const isPathAbs = strPath[0] === '/';
+    const path = stringToPath(strPath);
+
+    const absPath = isPathAbs ? path : join(cwd, path);
+    const node = getFs(fs, absPath);
+
+    if (!node) {
+        write(`${pathToString(path)}: not found`);
+        return;
+    }
+
+    cb(node, absPath);
+}
+
+export const catCmd: ICommand = {
+    name: 'cat',
+    run(_, args, props) {
+        const {write, fs, cwd} = props;
+
+        nodeHelper(write, fs, cwd, args, (node) => {
+            if (isFile(node)) {
+                node.cat(node, props);
+            }
+        });
+    },
+};
+
+export const pwdCmd: ICommand = {
+    name: 'pwd',
+    run(_, args, {write, cwd}) {
+        write(pathToString(cwd));
+    },
+};
+
+export const lsCmd: ICommand = {
+    name: 'ls',
+    run(_, args, {write, cwd, fs}) {
+        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+            if (isFile(node)) {
+                write(pathToString(absPath));
+                return;
+            }
+
+            if (isFolder(node)) {
+                for (const child of node.children) {
+                    write(child.name);
+                }
+            }
+        });
+    },
+};
+
+function printTree(node: IFsNode, level: number, write) {
+    let spacer = '';
+    for (let i = 0; i < level; i++) {
+        spacer += '- ';
+    }
+
+    if (isFile(node)) {
+        write(spacer + node.name);
+        return;
+    }
+
+    if (isFolder(node)) {
+        for (const child of node.children) {
+            write(spacer + child.name);
+            printTree(child, level + 1, write);
+        }
+    }
+}
+
+export const treeCmd: ICommand = {
+    name: 'tree',
+    run(_, args, {write, cwd, fs}) {
+        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+            printTree(node, 0, write);
+        });
+    },
+};
+
+export const clearCmd: ICommand = {
+    name: 'clear',
+    run(_, args, {clear}) {
+        clear();
+    },
+};
+
+export const shrugCmd: ICommand = {
+    name: 'shrug',
+    run(_, args, {write}) {
+        write('¯\\_(ツ)_/¯');
+    },
+};
+
+export const raccoonCmd: ICommand = {
+    name: 'raccoon',
+    run(_, args, {write}) {
+        write(<div style={{width: '10vw', padding: 10}}><TiltRaccoon /></div>);
+    },
+};
+
+export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd, raccoonCmd];

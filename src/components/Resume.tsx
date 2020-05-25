@@ -1,5 +1,4 @@
 import * as React from 'react';
-// @ts-ignore
 import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf';
 import Button from './Button';
 import Page from './Page';
