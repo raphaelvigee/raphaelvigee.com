@@ -76,7 +76,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         write: writeNonPrompt,
     });
 
-    const keypressCb = useCallback(
+    const keydownCb = useCallback(
         (event: KeyboardEvent) => {
             if (event.metaKey) {
                 return;
@@ -90,7 +90,6 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                 case 'ArrowRight':
                 case 'ArrowUp':
                 case 'ArrowDown':
-                case 'Backspace':
                     event.preventDefault();
                     break;
                 case 'Tab':
@@ -113,25 +112,6 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     setRunning(false);
                     setCurrentLine('');
                     event.preventDefault();
-                    break;
-                default:
-                    setCurrentLine((c) => `${c}${event.key}`);
-                    event.preventDefault();
-                    break;
-            }
-    }, [cmds, writeLine, currentLine, setCurrentLine]);
-    useEventListener('keypress', keypressCb);
-
-    const keydownCb = useCallback(
-        (event: KeyboardEvent) => {
-            if (event.metaKey) {
-                return;
-            }
-
-            switch (event.key) {
-                case 'Backspace':
-                    event.preventDefault();
-                    setCurrentLine(currentLine.slice(0, -1));
                     break;
             }
     }, [cmds, writeLine, currentLine, setCurrentLine]);
@@ -163,7 +143,16 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         <div className={styles.terminal} onClick={onTerminalClick}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
             {!running && <Line prompt={true} content={<>{currentLine}<Caret /></>} />}
-            <input type='text' className={styles.hiddenInput} ref={inputRef} />
+            <input type='text'
+                   className={styles.hiddenInput}
+                   ref={inputRef}
+                   value={currentLine}
+                   autoCapitalize={'off'}
+                   autoComplete={'off'}
+                   autoCorrect={'off'}
+                   spellCheck={false}
+                   autoFocus={true}
+                   onChange={(e) => setCurrentLine(e.target.value)} />
             <div ref={bottomRef} />
         </div>
     );
