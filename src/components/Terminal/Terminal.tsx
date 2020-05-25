@@ -76,13 +76,11 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         write: writeNonPrompt,
     });
 
-    const cb = useCallback(
+    const keypressCb = useCallback(
         (event: KeyboardEvent) => {
             if (event.metaKey) {
                 return;
             }
-
-            event.preventDefault();
 
             switch (event.key) {
                 case 'Shift':
@@ -92,6 +90,8 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                 case 'ArrowRight':
                 case 'ArrowUp':
                 case 'ArrowDown':
+                case 'Backspace':
+                    event.preventDefault();
                     break;
                 case 'Tab':
                     const [name, ...rest] = currentLine.split(' ');
@@ -102,10 +102,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                         if (candidates.length === 1) {
                             setCurrentLine(`${candidates[0].name} `);
                         }
-
-                        break;
                     }
 
+                    event.preventDefault();
                     break;
                 case 'Enter':
                     writeLine(true, currentLine);
@@ -113,15 +112,30 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     runCmdWithContext(currentLine);
                     setRunning(false);
                     setCurrentLine('');
-                    break;
-                case 'Backspace':
-                    setCurrentLine(currentLine.slice(0, -1));
+                    event.preventDefault();
                     break;
                 default:
                     setCurrentLine((c) => `${c}${event.key}`);
+                    event.preventDefault();
                     break;
             }
     }, [cmds, writeLine, currentLine, setCurrentLine]);
+    useEventListener('keypress', keypressCb);
+
+    const keydownCb = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.metaKey) {
+                return;
+            }
+
+            switch (event.key) {
+                case 'Backspace':
+                    event.preventDefault();
+                    setCurrentLine(currentLine.slice(0, -1));
+                    break;
+            }
+    }, [cmds, writeLine, currentLine, setCurrentLine]);
+    useEventListener('keydown', keydownCb);
 
     useEffect(() => {
         if (motd) {
@@ -133,7 +147,6 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         }
     }, []);
 
-    useEventListener('keydown', cb);
     useEffect(() => {
         if (bottomRef.current) {
             bottomRef.current.scrollIntoView({behavior: 'smooth'});
