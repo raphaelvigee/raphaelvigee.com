@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Entry from './Entry';
+import Entry, {BlueLabelDecorator, PinkLabelDecorator} from './Entry';
 import Page from './Page';
 import ProjectEntry from './ProjectEntry';
 import SubTitle from './SubTitle';
@@ -13,42 +13,52 @@ const TAG_C = {name: 'C'};
 const TAG_CPP = {name: 'C++'};
 const TAG_JAVA = {name: 'Java'};
 
+const JobLabel = <PinkLabelDecorator text={'Job'} />;
+const ProjectLabel = <BlueLabelDecorator text={'Project'} />;
+
 const Experiences: React.FC = () => (
     <Page>
         <Title style={{marginBottom: 60}} label={'Experiences'}/>
 
         <SubTitle label={'Jobs'}/>
 
-    <Entry date={'July 2018 - Present'}
+    <Entry decorator={JobLabel}
+           date={'July 2018 - Present'}
            title={'Software Engineer'}
            details={'Golang / Kubernetes / ReactJs / NodeJs / Python'}
            location={'Cisco, Remote'}/>
 
-    <Entry date={'August 2018 - July 2019'}
+    <Entry decorator={JobLabel}
+           date={'August 2018 - July 2019'}
            title={'Software Engineer Intern'}
            details={'Golang / Kubernetes / ReactJs / NodeJs / Python'}
            location={'Cisco, San Jose, USA'}/>
 
-    <Entry date={'June - July 2017'}
+    <Entry decorator={JobLabel}
+           date={'June - July 2017'}
            title={'Full Stack Web Developer'}
            details={'Symfony 3 / ReactJs'}
            location={'Windoo, Paris, France'}/>
 
-    <Entry date={'November 2016 - March 2018'}
+    <Entry decorator={JobLabel}
+           date={'November 2016 - March 2018'}
            title={'Full Stack Web Developer & Mobile App Developer'}
            details={'Symfony 3 / ReactJs / React Native'}
-           location={'Captain Fight, Bordeaux, France (Remote)'}/>
+           location={'Captain Fight, Remote'}/>
 
-    <Entry date={'July 2016'}
+    <Entry decorator={JobLabel}
+           date={'July 2016'}
            title={'Full Stack Web Developer & Mobile App Developer'}
            details={'Symfony 2 / React Native'}
            location={'Windoo, Paris, France'}/>
 
-    <Entry date={'July - August 2015'}
+    <Entry decorator={JobLabel}
+           date={'July - August 2015'}
            title={'Full Stack Web Developer'}
            location={'Concepting, Paris, France'}/>
 
-    <Entry date={'May 2014'}
+    <Entry decorator={JobLabel}
+           date={'May 2014'}
            title={'Full Stack Web Developer'}
            location={'Les Argonautes, Paris, France'}/>
 

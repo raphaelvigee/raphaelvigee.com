@@ -2,10 +2,9 @@ import {createRef, useEffect} from 'react';
 import * as React from 'react';
 // @ts-ignore
 import VanillaTilt from 'vanilla-tilt';
-// @ts-ignore
-import raccoon from '../assets/images/raccoon.svg';
+import RaccoonSVG from '../assets/images/raccoon.svg';
 
-interface IVanillaTilt extends HTMLImageElement {
+interface IVanillaTilt extends HTMLDivElement {
     vanillaTilt: any;
 }
 
@@ -26,7 +25,11 @@ const InteractiveRaccoon: React.FC = () => {
         };
     }, []);
 
-    return <img src={raccoon} alt='Raccoon' ref={img}/>;
+    return (
+        <div ref={img}>
+            <RaccoonSVG preserveAspectRatio='xMidYMid meet' style={{width: '100%', height: '100%'}} />
+        </div>
+    );
 };
 
 export default InteractiveRaccoon;

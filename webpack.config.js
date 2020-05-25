@@ -18,11 +18,38 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     .configureCssLoader(config => {
-        config.modules = true;
         if (Encore.isProduction()) {
-            config.localIdentName = '[sha1:hash:hex:4]';
+            config.modules = {
+                localIdentName: '[sha1:hash:hex:4]',
+            };
         } else {
-            config.localIdentName = '[name]__[local]--[sha1:hash:hex:4]';
+            config.modules = {
+                localIdentName: '[name]__[local]--[sha1:hash:hex:4]',
+            };
+        }
+    })
+
+    .configureLoaderRule('images', () => ({
+        test: /\.(png|jpg|jpeg|gif|ico|webp)$/,
+    }))
+
+    .addRule({
+        test: /\.(pdf)$/,
+        loader: 'file-loader',
+        options: {
+            name: 'assets/cv/[name].[ext]',
+        }
+    })
+    .addRule({
+        test: /\.(svg)$/,
+        loader: '@svgr/webpack',
+        options: {
+            ref: true,
+            svgoConfig: {
+                plugins: {
+                    removeViewBox: false
+                }
+            }
         }
     })
 
@@ -32,14 +59,6 @@ Encore
 ;
 
 const config = Encore.getWebpackConfig();
-
-config.module.rules.push({
-    test: /\.(pdf)$/,
-    loader: 'file-loader',
-    options: {
-        name: 'assets/cv/[name].[ext]',
-    }
-});
 
 config.plugins.push(new HtmlWebpackPlugin({
     template: 'src/app.html',
@@ -90,11 +109,5 @@ config.plugins.push(new FaviconsWebpackPlugin({
         windows: false
     }
 }));
-
-config.plugins.push(
-    new webpack.WatchIgnorePlugin([
-        /scss\.d\.ts$/
-    ]),
-);
 
 module.exports = config;

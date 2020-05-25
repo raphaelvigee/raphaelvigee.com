@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": { "*": ["types/*"] },
     "outDir": "./build/",        // path to output directory
     "sourceMap": true,          // allow sourcemap support
     "strictNullChecks": true,   // enable strict null checks as a best practice
@@ -9,10 +8,10 @@
     "jsx": "react",             // use typescript to transpile jsx to js
     "target": "es5",            // specify ECMAScript target version
     "lib": [ "dom", "es2015" ],
-    "typeRoots": ["src/types"]
+    "typeRoots": ["./src/types","node_modules/@types"]
   },
   "include": [
-    "./node_modules/@types",
     "./src/**/*"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }

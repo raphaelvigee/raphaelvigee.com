@@ -1,42 +1,68 @@
+import cx from 'classnames';
 import {ReactNode} from 'react';
 import * as React from 'react';
 import styles from './Entry.scss';
 
 interface IEntry {
+    decorator?: ReactNode;
     date?: ReactNode;
     title?: ReactNode;
     details?: ReactNode;
     location?: ReactNode;
 }
 
-const Entry: React.FC<IEntry> = ({date = null, title = null, details = null, location = null}) => {
+export function BlueBorderDecorator() {
+    return <div className={cx(styles.decorator, styles.border, styles.blue)} />;
+}
+
+interface ILabelDecoratorProps {
+    text: string;
+}
+
+export function BlueLabelDecorator({text}: ILabelDecoratorProps) {
+    return <div className={cx(styles.decorator, styles.label, styles.blue)}>{text}</div>;
+}
+
+export function PinkLabelDecorator({text}: ILabelDecoratorProps) {
+    return <div className={cx(styles.decorator, styles.label, styles.pink)}>{text}</div>;
+}
+
+export default function Entry({
+  decorator = <BlueBorderDecorator />,
+  date = null,
+  title = null,
+  details = null,
+  location = null,
+}: IEntry) {
     return (
         <div className={styles.entry}>
-            {date && (
-                <div className={styles.date}>
-                    {date}
-                </div>
-            )}
+            {decorator}
 
-            {title && (
-                <div className={styles.title}>
-                    {title}
-                </div>
-            )}
+            <div className={styles.content}>
+                {date && (
+                    <div className={styles.date}>
+                        {date}
+                    </div>
+                )}
 
-            {details && (
-                <div className={styles.details}>
-                    {details}
-                </div>
-            )}
+                {title && (
+                    <div className={styles.title}>
+                        {title}
+                    </div>
+                )}
 
-            {location && (
-                <div className={styles.location}>
-                    {location}
-                </div>
-            )}
+                {details && (
+                    <div className={styles.details}>
+                        {details}
+                    </div>
+                )}
+
+                {location && (
+                    <div className={styles.location}>
+                        {location}
+                    </div>
+                )}
+            </div>
         </div>
     );
-};
-
-export default Entry;
+}

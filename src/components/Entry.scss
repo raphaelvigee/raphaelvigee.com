@@ -1,31 +1,64 @@
 @import "../common";
 
 .entry {
-  @extend .fontRobotoLt;
-  border-left: 4px solid $primary;
-  padding: .6em .6em .6em 1em;
-  font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
   margin-top: 1em;
   background: white;
 
-  .date, .details {
-    color: $grey;
-    font-size: .5em;
-    margin-bottom: 10px;
+  .decorator {
+    height: inherit;
+
+    &.blue {
+      background: $primary;
+      color: $secondary;
+    }
+
+    &.pink {
+      background: $secondary;
+      color: white;
+    }
+
+    &.border {
+      width: 4px;
+    }
+
+    &.label {
+      @extend .fontLemonMilk;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: .8em;
+      padding: 3px;
+      text-align: center;
+    }
   }
 
-  .title {
-    color: $primary;
-    margin-bottom: 10px;
-  }
+  .content {
+    @extend .fontRobotoLt;
+    flex: 1;
+    padding: .6em .6em .6em 1em;
+    font-size: 1.5em;
 
-  .location {
-    @extend .fontRoboto;
-    color: black;
-    margin-bottom: 10px;
-  }
+    .date, .details {
+      color: $grey;
+      font-size: .5em;
+      margin-bottom: 10px;
+    }
 
-  & > *:last-child {
-    margin-bottom: 0;
+    .title {
+      color: $primary;
+      margin-bottom: 10px;
+    }
+
+    .location {
+      @extend .fontRoboto;
+      color: black;
+      margin-bottom: 10px;
+    }
+
+    & > *:last-child {
+      margin-bottom: 0;
+    }
   }
 }
