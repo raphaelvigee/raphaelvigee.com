@@ -81,21 +81,24 @@ export const lsCmd: ICommand = {
 };
 
 function printTree(node: IFsNode, level: number, write) {
-    let spacer = '';
-    for (let i = 0; i < level; i++) {
-        spacer += '- ';
-    }
-
     if (isFile(node)) {
-        write(spacer + node.name);
         return;
     }
 
+    let spacer = '';
+    for (let l = 0; l < level; l++) {
+        if (l === level - 1) {
+            spacer += '├── ';
+        } else {
+            spacer += '│   ';
+        }
+    }
+
     if (isFolder(node)) {
-        for (const child of node.children) {
+        node.children.forEach((child, i) => {
             write(spacer + child.name);
             printTree(child, level + 1, write);
-        }
+        });
     }
 }
 

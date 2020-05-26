@@ -16,7 +16,7 @@ export interface ICommand {
 }
 
 export function runCommand(commands: ICommand[], props: IRunProps) {
-    const [cmdName, ...cmdArgsParts] = props.line.split(' ');
+    const [cmdName, ...cmdArgsParts] = props.line.trim().split(' ');
     const cmdArgs = cmdArgsParts.join(' ');
 
     if (!cmdName) {

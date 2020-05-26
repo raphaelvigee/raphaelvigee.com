@@ -7,9 +7,7 @@ import {ICommand, runCommand} from './utils';
 
 function Line({prompt, content}: {prompt: boolean, content: ReactNode}) {
     return (
-        <div className={styles.line}>
-            {prompt && '$'} {content}
-        </div>
+        <div className={styles.line}>{prompt && '$ '}{content}</div>
     );
 }
 
