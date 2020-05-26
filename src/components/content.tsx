@@ -1,35 +1,105 @@
 import * as React from 'react';
+import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf';
 import ContactComponent from './Contact';
 import EducationComponent from './Education';
 import ExperiencesComponent from './Experiences';
 import HacksComponent from './Hacks';
 import ResumeComponent from './Resume';
+import {catOpen} from './Terminal/fs';
+import {IRunProps} from './Terminal/utils';
+
+function printNl(write) {
+    write(` `);
+}
+
+function printTitle(title: string, write) {
+    write(title);
+    write('='.repeat(title.length));
+}
+
+function printEntry<O>(keys: {[s in keyof O]?: string}, o: O, write) {
+    const m = Math.max(...Object.keys(keys).map((k) => k.length));
+
+    for (const [k, name] of Object.entries(keys) as Array<[keyof O, string]>) {
+        if (k in o) {
+            write(<>{`${name}${' '.repeat(m - name.length)}: `}{o[k]}</>);
+        }
+    }
+
+    printNl(write);
+}
 
 export const Pages = [
     {
         name: 'Education',
         path: 'education',
         component: EducationComponent,
+        cat: (_, {write}: IRunProps) => {
+            Education.forEach((e) => {
+                printEntry({
+                    date: 'Date',
+                    title: 'Title',
+                    details: 'Details',
+                    location: 'Location',
+                }, e, write);
+            });
+        },
     },
     {
         name: 'Hacks',
         path: 'hacks',
         component: HacksComponent,
+        cat: (_, {write}: IRunProps) => {
+            Hacks.forEach((e) => {
+                printEntry({
+                    date: 'Date',
+                    title: 'Title',
+                    location: 'Location',
+                }, e, write);
+            });
+        },
     },
     {
         name: 'Experiences',
         path: 'experiences',
         component: ExperiencesComponent,
+        cat: (_, {write}: IRunProps) => {
+            printTitle('Jobs', write);
+            JobExperiences.forEach((e) => {
+                printEntry({
+                    date: 'Date',
+                    title: 'Title',
+                    details: 'Details',
+                    location: 'Location',
+                }, e, write);
+            });
+
+            printNl(write);
+
+            printTitle('Projects', write);
+            ProjectExperiences.forEach((e) => {
+                printEntry({
+                    title: 'Title',
+                    description: 'Description',
+                    link: 'Link',
+                }, e, write);
+            });
+
+        },
     },
     {
         name: 'Résumé',
         path: 'resume',
         component: ResumeComponent,
+        cat: catOpen(CVShort),
     },
     {
         name: 'Contact',
         path: 'contact',
         component: ContactComponent,
+        cat: (_, {write}: IRunProps) => {
+            write(<ContactComponent />);
+        },
     },
 ];
 

@@ -16,9 +16,9 @@ export class FsFolder implements IFsNode {
 
 export class FsFile implements IFsNode {
     public name: string;
-    public cat: (node: FsFile, props: IRunProps) => void;
+    public cat?: (node: FsFile, props: IRunProps) => void;
 
-    constructor({name, cat}: { name: string, cat: (node: FsFile, props: IRunProps) => void }) {
+    constructor({name, cat}: { name: string, cat?: (node: FsFile, props: IRunProps) => void }) {
         this.name = name;
         this.cat = cat;
     }

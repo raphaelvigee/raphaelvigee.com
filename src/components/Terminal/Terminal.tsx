@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import {
+    MouseEvent,
+    ReactNode,
+    SyntheticEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import {Simulate} from 'react-dom/test-utils';
 import useEventListener from '../../hooks/useEventListener';
 import {IFsNode} from './fs';
 import styles from './Terminal.scss';
@@ -112,6 +122,20 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         setLines((l) => [...l, {input, content}]), [setLines]);
     const writeNonPrompt = useCallback((c: ReactNode) => writeLine(false, c), [writeLine]);
 
+    function gateCapture(e: SyntheticEvent | UIEvent, cb: () => void) {
+        const t = e.target as HTMLElement;
+        const tagName = t.tagName;
+
+        if (tagName === 'INPUT' || tagName === 'TEXTAREA') {
+            if (t !== inputRef.current) {
+                e.stopPropagation();
+                return;
+            }
+        }
+
+        cb();
+    }
+
     const cmds = useMemo(() => {
         return [
             ...userCmds,
@@ -137,43 +161,45 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     const keydownCb = useCallback(
         (event: KeyboardEvent) => {
-            if (event.metaKey) {
-                return;
-            }
+            gateCapture(event, () => {
+                if (event.metaKey) {
+                    return;
+                }
 
-            switch (event.key) {
-                case 'ArrowUp':
-                    event.preventDefault();
-                    prevHistory();
-                    break;
-                case 'ArrowDown':
-                    event.preventDefault();
-                    nextHistory();
-                    break;
-                case 'Tab':
-                    event.preventDefault();
+                switch (event.key) {
+                    case 'ArrowUp':
+                        event.preventDefault();
+                        prevHistory();
+                        break;
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        nextHistory();
+                        break;
+                    case 'Tab':
+                        event.preventDefault();
 
-                    const [name, ...rest] = currentLine.split(' ');
+                        const [name, ...rest] = currentLine.split(' ');
 
-                    if (!currentLine.includes(' ')) {
-                        const candidates = findCmds(cmds, name);
+                        if (!currentLine.includes(' ')) {
+                            const candidates = findCmds(cmds, name);
 
-                        if (candidates.length === 1) {
-                            setCurrentLine(`${candidates[0].name} `);
+                            if (candidates.length === 1) {
+                                setCurrentLine(`${candidates[0].name} `);
+                            }
                         }
-                    }
 
-                    break;
-                case 'Enter':
-                    event.preventDefault();
-                    writeLine(true, currentLine);
-                    addHistory(currentLine);
-                    setRunning(true);
-                    runCmdWithContext(currentLine);
-                    setRunning(false);
-                    setCurrentLine('');
-                    break;
-            }
+                        break;
+                    case 'Enter':
+                        event.preventDefault();
+                        writeLine(true, currentLine);
+                        addHistory(currentLine);
+                        setRunning(true);
+                        runCmdWithContext(currentLine);
+                        setRunning(false);
+                        setCurrentLine('');
+                        break;
+                }
+            });
     }, [cmds, writeLine, currentLine, setCurrentLine]);
     useEventListener('keydown', keydownCb);
 
@@ -213,10 +239,12 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     useEffect(scrollBottom, [lines, running, currentLine]);
 
-    const focusInput = useCallback(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
+    const focusInput = useCallback((e: MouseEvent) => {
+        gateCapture(e, () => {
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        });
     }, [inputRef]);
 
     const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

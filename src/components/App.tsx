@@ -5,13 +5,13 @@ import Sidebar from './Sidebar';
 
 import cx from 'classnames';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
-import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf';
 import styles from './App.scss';
 import Home from './Home';
 import ScrollToTop from './ScrollTop';
 import cmds from './Terminal/commands';
 import {catOpen, FsFile, FsFolder, IFsNode} from './Terminal/fs';
 import Terminal from './Terminal/Terminal';
+import TiltRaccoon from './TiltRaccoon';
 
 const motd = <pre>
 {`
@@ -31,10 +31,7 @@ Feeling lost? try help
 
 const pagesFiles = Pages.map((p) => new FsFile({
     name: p.path,
-    cat: (_, props) => {
-        const Component = p.component;
-        props.write(<Component />);
-    },
+    cat: p.cat,
 }));
 
 const fs: IFsNode = new FsFolder({
@@ -48,8 +45,10 @@ const fs: IFsNode = new FsFolder({
                     children: [
                         ...pagesFiles,
                         new FsFile({
-                            name: 'resume.pdf',
-                            cat: catOpen(CVShort),
+                            name: 'raccoon',
+                            cat: (_, {write}) => {
+                                write(<div style={{width: '10vw', padding: 10}}><TiltRaccoon /></div>);
+                            },
                         }),
                     ],
                 }),

@@ -49,7 +49,9 @@ export const catCmd: ICommand = {
 
         nodeHelper(write, fs, cwd, args, (node) => {
             if (isFile(node)) {
-                node.cat(node, props);
+                if (node.cat) {
+                    node.cat(node, props);
+                }
             }
         });
     },
@@ -125,11 +127,4 @@ export const shrugCmd: ICommand = {
     },
 };
 
-export const raccoonCmd: ICommand = {
-    name: 'raccoon',
-    run(_, args, {write}) {
-        write(<div style={{width: '10vw', padding: 10}}><TiltRaccoon /></div>);
-    },
-};
-
-export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd, raccoonCmd];
+export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd];
