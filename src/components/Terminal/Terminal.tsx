@@ -229,11 +229,11 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         <div className={styles.terminal} onClick={focusInput}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
             {!running && <CurrentLine line={currentLine} pos={caretPos} />}
-            <input type='url'
+            <input type='text'
                    className={styles.hiddenInput}
                    ref={inputRef}
                    value={currentLine}
-                   autoCapitalize={'off'}
+                   autoCapitalize={'none'}
                    autoComplete={'off'}
                    autoCorrect={'off'}
                    spellCheck={false}
