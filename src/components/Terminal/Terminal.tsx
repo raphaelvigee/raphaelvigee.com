@@ -13,8 +13,26 @@ function Line({prompt, content}: {prompt: boolean, content: ReactNode}) {
     );
 }
 
-function Caret() {
-    return <div className={styles.caret}>&nbsp;</div>;
+function Caret({symbol = <>&nbsp;</>}: {symbol?: ReactNode}) {
+    return <div className={styles.caret}>{symbol}</div>;
+}
+
+function CurrentLine({line, pos}: {line: string, pos: number}) {
+    const content = line.split('').map((l, i) => {
+        if (i === pos) {
+            return <Caret key={'caret'} symbol={l} />;
+        } else {
+            return l;
+        }
+    });
+
+    if (pos < 0 || pos > line.length - 1) {
+        content.push(<Caret key={'caret'} />);
+    }
+
+    return (
+        <Line prompt={true} content={content} />
+    );
 }
 
 interface ITerminal {
@@ -90,6 +108,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [addHistory, historyElement, prevHistory, nextHistory] = useHistory();
+    const [caretPos, setCaretPos] = useState(-1);
 
     const writeLine = useCallback((input: boolean, content: ReactNode) =>
         setLines((l) => [...l, {input, content}]), [setLines]);
@@ -125,20 +144,17 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
             }
 
             switch (event.key) {
-                case 'Shift':
-                case 'Alt':
-                case 'Control':
-                case 'ArrowLeft':
-                case 'ArrowRight':
-                    event.preventDefault();
-                    break;
                 case 'ArrowUp':
+                    event.preventDefault();
                     prevHistory();
                     break;
                 case 'ArrowDown':
+                    event.preventDefault();
                     nextHistory();
                     break;
                 case 'Tab':
+                    event.preventDefault();
+
                     const [name, ...rest] = currentLine.split(' ');
 
                     if (!currentLine.includes(' ')) {
@@ -149,20 +165,29 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                         }
                     }
 
-                    event.preventDefault();
                     break;
                 case 'Enter':
+                    event.preventDefault();
                     writeLine(true, currentLine);
                     addHistory(currentLine);
                     setRunning(true);
                     runCmdWithContext(currentLine);
                     setRunning(false);
                     setCurrentLine('');
-                    event.preventDefault();
                     break;
             }
     }, [cmds, writeLine, currentLine, setCurrentLine]);
     useEventListener('keydown', keydownCb);
+
+    const syncCaret = useCallback(
+        () => {
+            if (inputRef.current) {
+                const ss = inputRef.current.selectionStart;
+                setCaretPos( ss !== null ? ss : -1);
+            }
+        }, [cmds, writeLine, currentLine, setCurrentLine]);
+    useEventListener('keyup', syncCaret);
+    useEventListener('keydown', syncCaret);
 
     useEffect(() => {
         if (motd) {
@@ -200,7 +225,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     return (
         <div className={styles.terminal} onClick={focusInput}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
-            {!running && <Line prompt={true} content={<>{currentLine}<Caret /></>} />}
+            {!running && <CurrentLine line={currentLine} pos={caretPos} />}
             <input type='url'
                    className={styles.hiddenInput}
                    ref={inputRef}
