@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import useEventListener from '../../hooks/useEventListener';
 import {IFsNode} from './fs';
 import styles from './Terminal.scss';
@@ -49,9 +49,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const writeLine = useCallback((input: boolean, c: ReactNode) =>
-        setLines((l) => [...l, {input, content: c}]), [setLines]);
-    const writeNonPrompt = (c: ReactNode) => writeLine(false, c);
+    const writeLine = useCallback((input: boolean, content: ReactNode) =>
+        setLines((l) => [...l, {input, content}]), [setLines]);
+    const writeNonPrompt = useCallback((c: ReactNode) => writeLine(false, c), [writeLine]);
 
     const cmds = useMemo(() => {
         return [
@@ -127,22 +127,23 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         }
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (bottomRef.current) {
             bottomRef.current.scrollIntoView({behavior: 'smooth'});
         }
-    }, [lines]);
+    }, [lines, running]);
 
-    function onTerminalClick() {
+    const onTerminalClick = useCallback(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }
+    }, []);
 
     return (
         <div className={styles.terminal} onClick={onTerminalClick}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
             {!running && <Line prompt={true} content={<>{currentLine}<Caret /></>} />}
+            <div ref={bottomRef} />
             <input type='text'
                    className={styles.hiddenInput}
                    ref={inputRef}
@@ -153,7 +154,6 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                    spellCheck={false}
                    autoFocus={true}
                    onChange={(e) => setCurrentLine(e.target.value)} />
-            <div ref={bottomRef} />
         </div>
     );
 }

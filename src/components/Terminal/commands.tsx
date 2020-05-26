@@ -35,7 +35,7 @@ function nodeHelper(
     const node = getFs(fs, absPath);
 
     if (!node) {
-        write(`${absPath}: not found`);
+        write(`${pathToString(absPath)}: not found`);
         return;
     }
 
