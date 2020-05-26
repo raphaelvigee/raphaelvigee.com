@@ -60,7 +60,7 @@ function findCmds(cmds: ICommand[], str: string) {
 function useHistory() {
     const [history, setHistory] = useState<string[]>([]);
     const [i, setI] = useState<number|null>(null);
-    const maxI = history.length - 1;
+    const maxI = history.length > 0 ? history.length - 1 : null;
 
     function add(e: string) {
         setHistory((h) => [...h, e]);
@@ -82,7 +82,7 @@ function useHistory() {
     }
 
     function next() {
-        if (i === null) {
+        if (i === null || maxI === null) {
             return;
         }
 
