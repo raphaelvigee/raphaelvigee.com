@@ -41,6 +41,47 @@ function findCmds(cmds: ICommand[], str: string) {
     return candidates;
 }
 
+function useHistory() {
+    const [history, setHistory] = useState<string[]>([]);
+    const [i, setI] = useState<number|null>(null);
+    const maxI = history.length - 1;
+
+    function add(e: string) {
+        setHistory((h) => [...h, e]);
+    }
+
+    function cancelI() {
+        setI(null);
+    }
+
+    function prev() {
+        if (i === null) {
+            setI(maxI);
+            return;
+        }
+
+        if (i > 0) {
+            setI(i - 1);
+        }
+    }
+
+    function next() {
+        if (i === null) {
+            return;
+        }
+
+        if (i < maxI) {
+            setI(i + 1);
+        } else {
+            cancelI();
+        }
+    }
+
+    const elem = i != null ? history[i] : null;
+
+    return [add, elem, prev, next, cancelI] as const;
+}
+
 export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null, initCmds = []}: ITerminal) {
     const [lines, setLines] = useState<ILine[]>([]);
     const [currentLine, setCurrentLine] = useState('');
@@ -48,6 +89,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     const [running, setRunning] = useState(false);
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [addHistory, historyElement, prevHistory, nextHistory] = useHistory();
 
     const writeLine = useCallback((input: boolean, content: ReactNode) =>
         setLines((l) => [...l, {input, content}]), [setLines]);
@@ -88,9 +130,13 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                 case 'Control':
                 case 'ArrowLeft':
                 case 'ArrowRight':
-                case 'ArrowUp':
-                case 'ArrowDown':
                     event.preventDefault();
+                    break;
+                case 'ArrowUp':
+                    prevHistory();
+                    break;
+                case 'ArrowDown':
+                    nextHistory();
                     break;
                 case 'Tab':
                     const [name, ...rest] = currentLine.split(' ');
@@ -107,6 +153,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     break;
                 case 'Enter':
                     writeLine(true, currentLine);
+                    addHistory(currentLine);
                     setRunning(true);
                     runCmdWithContext(currentLine);
                     setRunning(false);
@@ -126,6 +173,10 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
             runCmdWithContext(l);
         }
     }, []);
+
+    useEffect(() => {
+        setCurrentLine(historyElement || '');
+    }, [historyElement]);
 
     const scrollBottom = useCallback(() => {
         if (bottomRef.current) {
