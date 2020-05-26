@@ -219,6 +219,7 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentLine(e.target.value);
+        syncCaret();
         scrollBottom();
     }, [setCurrentLine, scrollBottom]);
 
