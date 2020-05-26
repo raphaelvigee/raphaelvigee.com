@@ -127,24 +127,30 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         }
     }, []);
 
-    useLayoutEffect(() => {
+    const scrollBottom = useCallback(() => {
         if (bottomRef.current) {
-            bottomRef.current.scrollIntoView({behavior: 'smooth'});
+            bottomRef.current.scrollIntoView({behavior: 'smooth', block: 'end'});
         }
-    }, [lines, running]);
+    }, [bottomRef]);
 
-    const onTerminalClick = useCallback(() => {
+    useEffect(scrollBottom, [lines, running, currentLine]);
+
+    const focusInput = useCallback(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }, []);
+    }, [inputRef]);
+
+    const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCurrentLine(e.target.value);
+        scrollBottom();
+    }, [setCurrentLine, scrollBottom]);
 
     return (
-        <div className={styles.terminal} onClick={onTerminalClick}>
+        <div className={styles.terminal} onClick={focusInput}>
             {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
             {!running && <Line prompt={true} content={<>{currentLine}<Caret /></>} />}
-            <div ref={bottomRef} />
-            <input type='text'
+            <input type='url'
                    className={styles.hiddenInput}
                    ref={inputRef}
                    value={currentLine}
@@ -153,7 +159,8 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                    autoCorrect={'off'}
                    spellCheck={false}
                    autoFocus={true}
-                   onChange={(e) => setCurrentLine(e.target.value)} />
+                   onChange={onInputChange} />
+            <div ref={bottomRef} />
         </div>
     );
 }
