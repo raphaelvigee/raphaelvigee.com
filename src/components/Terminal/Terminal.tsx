@@ -203,6 +203,10 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         setCurrentLine(historyElement || '');
     }, [historyElement]);
 
+    useEffect(() => {
+        syncCaret();
+    }, [currentLine]);
+
     const scrollBottom = useCallback(() => {
         if (bottomRef.current) {
             bottomRef.current.scrollIntoView({behavior: 'smooth', block: 'end'});
