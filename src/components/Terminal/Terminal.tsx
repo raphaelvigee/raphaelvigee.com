@@ -122,18 +122,18 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         setLines((l) => [...l, {input, content}]), [setLines]);
     const writeNonPrompt = useCallback((c: ReactNode) => writeLine(false, c), [writeLine]);
 
-    function gateCapture(e: SyntheticEvent | UIEvent, cb: () => void) {
+    function gateCapture(e: SyntheticEvent | UIEvent) {
         const t = e.target as HTMLElement;
         const tagName = t.tagName;
 
         if (tagName === 'INPUT' || tagName === 'TEXTAREA') {
             if (t !== inputRef.current) {
                 e.stopPropagation();
-                return;
+                return true;
             }
         }
 
-        cb();
+        return false;
     }
 
     const cmds = useMemo(() => {
@@ -161,45 +161,47 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     const keydownCb = useCallback(
         (event: KeyboardEvent) => {
-            gateCapture(event, () => {
-                if (event.metaKey) {
-                    return;
-                }
+            if (gateCapture(event)) {
+                return;
+            }
 
-                switch (event.key) {
-                    case 'ArrowUp':
-                        event.preventDefault();
-                        prevHistory();
-                        break;
-                    case 'ArrowDown':
-                        event.preventDefault();
-                        nextHistory();
-                        break;
-                    case 'Tab':
-                        event.preventDefault();
+            if (event.metaKey) {
+                return;
+            }
 
-                        const [name, ...rest] = currentLine.split(' ');
+            switch (event.key) {
+                case 'ArrowUp':
+                    event.preventDefault();
+                    prevHistory();
+                    break;
+                case 'ArrowDown':
+                    event.preventDefault();
+                    nextHistory();
+                    break;
+                case 'Tab':
+                    event.preventDefault();
 
-                        if (!currentLine.includes(' ')) {
-                            const candidates = findCmds(cmds, name);
+                    const [name, ...rest] = currentLine.split(' ');
 
-                            if (candidates.length === 1) {
-                                setCurrentLine(`${candidates[0].name} `);
-                            }
+                    if (!currentLine.includes(' ')) {
+                        const candidates = findCmds(cmds, name);
+
+                        if (candidates.length === 1) {
+                            setCurrentLine(`${candidates[0].name} `);
                         }
+                    }
 
-                        break;
-                    case 'Enter':
-                        event.preventDefault();
-                        writeLine(true, currentLine);
-                        addHistory(currentLine);
-                        setRunning(true);
-                        runCmdWithContext(currentLine);
-                        setRunning(false);
-                        setCurrentLine('');
-                        break;
-                }
-            });
+                    break;
+                case 'Enter':
+                    event.preventDefault();
+                    writeLine(true, currentLine);
+                    addHistory(currentLine);
+                    setRunning(true);
+                    runCmdWithContext(currentLine);
+                    setRunning(false);
+                    setCurrentLine('');
+                    break;
+            }
     }, [cmds, writeLine, currentLine, setCurrentLine]);
     useEventListener('keydown', keydownCb);
 
@@ -240,11 +242,13 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     useEffect(scrollBottom, [lines, running, currentLine]);
 
     const focusInput = useCallback((e: MouseEvent) => {
-        gateCapture(e, () => {
-            if (inputRef.current) {
-                inputRef.current.focus();
-            }
-        });
+        if (gateCapture(e)) {
+            return;
+        }
+
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
     }, [inputRef]);
 
     const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
