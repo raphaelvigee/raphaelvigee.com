@@ -127,4 +127,11 @@ export const shrugCmd: ICommand = {
     },
 };
 
-export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd];
+export const rmCmd: ICommand = {
+    name: 'rm',
+    run(_, args, {write}) {
+        write(`rm: cannot remove ‘${args}’: Operation not permitted`);
+    },
+};
+
+export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd, rmCmd];
