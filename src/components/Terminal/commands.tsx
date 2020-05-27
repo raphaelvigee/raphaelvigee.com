@@ -82,24 +82,20 @@ export const lsCmd: ICommand = {
     },
 };
 
-function printTree(node: IFsNode, level: number, write) {
+function printTree(node: IFsNode, prevSpacer: string, level: number, isLast: boolean, write) {
+    const isRoot = level === 0;
+    const currentSpacer = isRoot ? '' : (isLast ? '└── ' : '├── ');
+    const childSpacer =  isRoot ? '' : (isLast ? '    ' : '│   ');
+
+    write(prevSpacer + currentSpacer + node.name);
+
     if (isFile(node)) {
         return;
-    }
-
-    let spacer = '';
-    for (let l = 0; l < level; l++) {
-        if (l === level - 1) {
-            spacer += '├── ';
-        } else {
-            spacer += '│   ';
-        }
-    }
-
-    if (isFolder(node)) {
+    } else if (isFolder(node)) {
         node.children.forEach((child, i) => {
-            write(spacer + child.name);
-            printTree(child, level + 1, write);
+            const childIsLast = i === node.children.length - 1;
+
+            printTree(child, prevSpacer + childSpacer, level + 1, childIsLast, write);
         });
     }
 }
@@ -108,7 +104,7 @@ export const treeCmd: ICommand = {
     name: 'tree',
     run(_, args, {write, cwd, fs}) {
         nodeHelper(write, fs, cwd, args, (node, absPath) => {
-            printTree(node, 0, write);
+            printTree(node, '', 0, true, write);
         });
     },
 };

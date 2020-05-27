@@ -88,9 +88,28 @@ export function getFs(fs: IFsNode, targetPath: string[]) {
     return node;
 }
 
+export function realpath(path: string[]) {
+    const out: string[] = [];
+
+    for (const p of path) {
+        switch (p) {
+            case '.':
+                break;
+            case '..':
+                out.pop();
+                break;
+            default:
+                out.push(p);
+                break;
+        }
+    }
+
+    return out;
+}
+
 export function parsePath(cwd: string[], strPath: string) {
     const isPathAbs = strPath[0] === '/';
     const path = stringToPath(strPath);
 
-    return isPathAbs ? path : join(cwd, path);
+    return realpath(isPathAbs ? path : join(cwd, path));
 }

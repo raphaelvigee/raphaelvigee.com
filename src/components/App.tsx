@@ -35,7 +35,7 @@ const pagesFiles = Pages.map((p) => new FsFile({
 }));
 
 const fs: IFsNode = new FsFolder({
-    name: '',
+    name: '/',
     children: [
         new FsFolder({
             name: 'usr',
