@@ -1,5 +1,5 @@
-import { getFs, IFsNode, isFile, isFolder, parsePath, pathToString } from './fs';
-import { ICommand } from './utils';
+import { getFs, IFsNode, isFile, isFolder, parsePath, pathToString } from '../fs';
+import { ICommand } from '../utils';
 
 export const cmdEcho: ICommand = {
     name: 'echo',
@@ -134,5 +134,3 @@ export const rmCmd: ICommand = {
         write(`rm: cannot remove ‘${args}’: Operation not permitted`);
     },
 };
-
-export default [cmdEcho, cmdCd, catCmd, pwdCmd, lsCmd, treeCmd, clearCmd, shrugCmd, rmCmd];
