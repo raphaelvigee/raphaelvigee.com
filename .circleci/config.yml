@@ -5,7 +5,7 @@ jobs:
       only:
         - master
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     environment:
       - TARGET_BRANCH: gh-pages
     steps:
