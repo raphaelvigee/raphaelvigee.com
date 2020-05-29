@@ -2,7 +2,7 @@ import cx from 'classnames';
 import * as React from 'react';
 import {Link, NavLink, Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Pages} from './content';
-import GradientLine from './GradientLine';
+import GradientLine from './Utils/GradientLine';
 import Name from './Name';
 import styles from './Sidebar.scss';
 import TiltRaccoon from './TiltRaccoon';

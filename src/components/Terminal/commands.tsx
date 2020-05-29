@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Redirect} from 'react-router';
-import TiltRaccoon from '../TiltRaccoon';
+import TiltRaccoon from '../Muggles/TiltRaccoon';
 import {getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath} from './fs';
 import {ICommand} from './utils';
 

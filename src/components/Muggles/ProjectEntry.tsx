@@ -1,5 +1,5 @@
 import * as React from 'react';
-import GradientLine from './GradientLine';
+import GradientLine from './Utils/GradientLine';
 import styles from './ProjectEntry.scss';
 
 interface ITag {

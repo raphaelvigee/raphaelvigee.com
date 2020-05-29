@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import * as React from 'react';
-import Button from './Button';
+import Button from './Utils/Button';
 import styles from './Contact.scss';
 import {InputText, InputTextArea} from './Form';
 import Page from './Page';
-import Title from './Title';
+import Title from './Utils/Title';
 
 interface ISContact {
     name: string;

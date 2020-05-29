@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Education as EducationItems} from './content';
-import Entry from './Entry';
+import Entry from './Utils/Entry';
 import Page from './Page';
-import Title from './Title';
+import Title from './Utils/Title';
 
 const Education: React.FC = () => (
     <Page>

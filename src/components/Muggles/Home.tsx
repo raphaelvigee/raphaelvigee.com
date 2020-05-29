@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import styles from './Home.scss';
-import LinkButton from './LinkButton';
+import LinkButton from './Utils/LinkButton';
 
 const Home: React.FC = () => (
     <div className={styles.container}>

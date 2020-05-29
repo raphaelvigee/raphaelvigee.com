@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {JobExperiences, ProjectExperiences} from './content';
-import Entry from './Entry';
+import Entry from './Utils/Entry';
 import Page from './Page';
 import ProjectEntry from './ProjectEntry';
-import SubTitle from './SubTitle';
-import Title from './Title';
+import SubTitle from './Utils/SubTitle';
+import Title from './Utils/Title';
 
 const Experiences: React.FC = () => (
     <Page>

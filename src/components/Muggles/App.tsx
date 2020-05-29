@@ -7,10 +7,10 @@ import cx from 'classnames';
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import styles from './App.scss';
 import Home from './Home';
-import ScrollToTop from './ScrollTop';
-import cmds from './Terminal/commands';
-import {catOpen, FsFile, FsFolder, IFsNode} from './Terminal/fs';
-import Terminal from './Terminal/Terminal';
+import ScrollToTop from './Utils/ScrollTop';
+import cmds from '../Terminal/commands';
+import {catOpen, FsFile, FsFolder, IFsNode} from '../Terminal/fs';
+import Terminal from '../Terminal/Terminal';
 import TiltRaccoon from './TiltRaccoon';
 
 const motd = <pre>

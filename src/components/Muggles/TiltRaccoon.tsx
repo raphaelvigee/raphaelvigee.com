@@ -3,7 +3,7 @@ import * as React from 'react';
 // @ts-ignore
 import VanillaTilt from 'vanilla-tilt';
 // @ts-ignore
-import raccoon from '../assets/images/raccoon.svg';
+import raccoon from '../../assets/images/raccoon.svg';
 
 interface IVanillaTilt extends HTMLImageElement {
     vanillaTilt: any;

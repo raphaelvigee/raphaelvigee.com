@@ -1,9 +1,9 @@
 import * as React from 'react';
-import CVShort from '../assets/cv/CV_Raphael_Vigee.short.pdf';
-import Button from './Button';
+import CVShort from '../../assets/cv/CV_Raphael_Vigee.short.pdf';
+import Button from './Utils/Button';
 import Page from './Page';
 import styles from './Resume.scss';
-import Title from './Title';
+import Title from './Utils/Title';
 
 const CVUrl = `${CVShort}?#zoom=FitH&scrollbar=0&toolbar=0&navpanes=0`;
 
