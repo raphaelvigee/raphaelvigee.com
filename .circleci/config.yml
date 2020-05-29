@@ -16,7 +16,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Install dependencies
-          command: yarn
+          command: yarn install
       - run:
           name: Install Serverless CLI and dependencies
           command: sudo npm i -g serverless
@@ -24,6 +24,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Lint
+          command: yarn lint
 #      - run:
 #          name: Run tests
 #          command: npm test
