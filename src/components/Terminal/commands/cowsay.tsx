@@ -11,6 +11,10 @@ const cow = `
 const cowsay = {
     name: 'cowsay',
     run(_, text: string, { write }: IRunProps) {
+        if (text.length === 0) {
+            text = 'Hello';
+        }
+
         const lines = (text.match(/.{0,39}/g) as string[]).filter((l) => l.length);
 
         const borderh = ' ' + '-'.repeat(lines[0].length + 2);
