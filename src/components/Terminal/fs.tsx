@@ -1,4 +1,4 @@
-import {IRunProps} from './utils';
+import { IRunProps } from './utils';
 
 export interface IFsNode {
     name: string;
@@ -8,7 +8,7 @@ export class FsFolder implements IFsNode {
     public name: string;
     public children: IFsNode[];
 
-    constructor({name, children}: { name: string, children: IFsNode[] }) {
+    constructor({ name, children }: { name: string; children: IFsNode[] }) {
         this.name = name;
         this.children = children;
     }
@@ -18,7 +18,7 @@ export class FsFile implements IFsNode {
     public name: string;
     public cat?: (node: FsFile, props: IRunProps) => void;
 
-    constructor({name, cat}: { name: string, cat?: (node: FsFile, props: IRunProps) => void }) {
+    constructor({ name, cat }: { name: string; cat?: (node: FsFile, props: IRunProps) => void }) {
         this.name = name;
         this.cat = cat;
     }

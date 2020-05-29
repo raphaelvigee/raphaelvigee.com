@@ -2,11 +2,11 @@ import cx from 'classnames';
 import * as React from 'react';
 import Button from './Utils/Button';
 import styles from './Contact.scss';
-import {InputText, InputTextArea} from './Form';
+import { InputText, InputTextArea } from './Form';
 import Page from './Page';
 import Title from './Utils/Title';
 
-interface ISContact {
+interface ContactState {
     name: string;
     email: string;
     content: string;
@@ -15,7 +15,7 @@ interface ISContact {
     ok: boolean;
 }
 
-export default class Contact extends React.Component<{}, ISContact> {
+export default class Contact extends React.Component<Record<string, unknown>, ContactState> {
     constructor(props) {
         super(props);
 
@@ -31,11 +31,13 @@ export default class Contact extends React.Component<{}, ISContact> {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    public handleChange(name: 'name'|'content'|'email', event: any) {
-        // @ts-ignore
+    public handleChange(
+        name: 'name' | 'content' | 'email',
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) {
         this.setState({
             [name]: event.target.value,
-        });
+        } as { [k in typeof name]: string });
     }
 
     public async handleSubmit() {
@@ -55,7 +57,7 @@ export default class Contact extends React.Component<{}, ISContact> {
                     name: this.state.name,
                 }),
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
                 method: 'POST',
@@ -70,7 +72,7 @@ export default class Contact extends React.Component<{}, ISContact> {
         } catch (e) {
             this.setState({
                 ok: false,
-                response: {error: 'Unexpected error, please try again later'},
+                response: { error: 'Unexpected error, please try again later' },
             });
         } finally {
             this.setState({
@@ -82,7 +84,7 @@ export default class Contact extends React.Component<{}, ISContact> {
     public render() {
         return (
             <Page>
-                <Title style={{marginBottom: 60}} label={'Contact'}/>
+                <Title style={{ marginBottom: 60 }} label={'Contact'} />
 
                 {this.renderForm()}
             </Page>
@@ -122,26 +124,32 @@ export default class Contact extends React.Component<{}, ISContact> {
     }
 
     public renderForm() {
-        const {ok, response} = this.state;
+        const { ok, response } = this.state;
 
         return (
             <React.Fragment>
-                <InputText value={this.state.name}
-                           onChange={(e) => this.handleChange('name', e)}
-                           placeholder={'Name'}/>
-                <InputText value={this.state.email}
-                           onChange={(e) => this.handleChange('email', e)}
-                           placeholder={'Email'}/>
-                <InputTextArea value={this.state.content}
-                               onChange={(e) => this.handleChange('content', e)}
-                               placeholder={'Message'}/>
+                <InputText
+                    value={this.state.name}
+                    onChange={(e) => this.handleChange('name', e)}
+                    placeholder={'Name'}
+                />
+                <InputText
+                    value={this.state.email}
+                    onChange={(e) => this.handleChange('email', e)}
+                    placeholder={'Email'}
+                />
+                <InputTextArea
+                    value={this.state.content}
+                    onChange={(e) => this.handleChange('content', e)}
+                    placeholder={'Message'}
+                />
 
                 <div className={styles.holder}>
-                    <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={'Send'}/>
+                    <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={'Send'} />
 
                     {response && (
                         <span className={cx(styles.message, ok && styles.success, !ok && styles.error)}>
-                            {ok ? 'Message sent, I\'ll be in touch!' : response.error}
+                            {ok ? "Message sent, I'll be in touch!" : response.error}
                         </span>
                     )}
                 </div>

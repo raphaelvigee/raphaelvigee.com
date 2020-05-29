@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {JobExperiences, ProjectExperiences} from './content';
+import { JobExperiences, ProjectExperiences } from './content';
 import Entry from './Utils/Entry';
 import Page from './Page';
 import ProjectEntry from './ProjectEntry';
@@ -8,18 +8,18 @@ import Title from './Utils/Title';
 
 const Experiences: React.FC = () => (
     <Page>
-        <Title style={{marginBottom: 60}} label={'Experiences'}/>
+        <Title style={{ marginBottom: 60 }} label={'Experiences'} />
 
-        <SubTitle label={'Jobs'}/>
+        <SubTitle label={'Jobs'} />
 
-        {JobExperiences.map((e) => (
-            <Entry {...e}/>
+        {JobExperiences.map((e, i) => (
+            <Entry key={i} {...e} />
         ))}
 
-    <SubTitle style={{marginTop: 60}} label={'Projects'}/>
+        <SubTitle style={{ marginTop: 60 }} label={'Projects'} />
 
-        {ProjectExperiences.map((e) => (
-            <ProjectEntry {...e}/>
+        {ProjectExperiences.map((e, i) => (
+            <ProjectEntry key={i} {...e} />
         ))}
     </Page>
 );

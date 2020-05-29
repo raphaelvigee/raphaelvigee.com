@@ -1,16 +1,15 @@
-import * as React from "react";
-import {NavLink, NavLinkProps} from "react-router-dom";
+import * as React from 'react';
+import { NavLink, NavLinkProps } from 'react-router-dom';
+import styles from './Button.scss';
 
-import styles from "./Button.scss";
-
-interface IProps extends NavLinkProps {
+interface LinkButtonProps extends NavLinkProps {
     label: string;
 }
 
-const LinkButton: React.FC<IProps> = ({label, ...rest}) => (
-    <NavLink className={styles.btn} {...rest}>
-        {label}
-    </NavLink>
-);
-
-export default LinkButton;
+export default function LinkButton({ label, ...rest }: LinkButtonProps) {
+    return (
+        <NavLink className={styles.btn} {...rest}>
+            {label}
+        </NavLink>
+    );
+}

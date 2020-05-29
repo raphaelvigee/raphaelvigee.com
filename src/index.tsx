@@ -5,10 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './components/Muggles/App';
 
-ReactDOM.render(
-    <App/>,
-    document.getElementById('app-root')
-);
+ReactDOM.render(<App />, document.getElementById('app-root'));
 
 if (module.hot) {
     module.hot.accept();

@@ -1,6 +1,10 @@
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function useEventListener<K extends keyof WindowEventMap, T extends EventListener>(eventName: K, handler: T, element = window) {
+export default function useEventListener<K extends keyof WindowEventMap, T extends EventListener>(
+    eventName: K,
+    handler: T,
+    element = window,
+) {
     // Create a ref that stores handler
     const savedHandler = useRef<T>();
 
@@ -16,7 +20,9 @@ export default function useEventListener<K extends keyof WindowEventMap, T exten
         () => {
             // Make sure element supports addEventListener
             const isSupported = element && element.addEventListener;
-            if (!isSupported) { return; }
+            if (!isSupported) {
+                return;
+            }
 
             // Create event listener that calls handler function stored in ref
             const eventListener = (event) => savedHandler.current!(event);

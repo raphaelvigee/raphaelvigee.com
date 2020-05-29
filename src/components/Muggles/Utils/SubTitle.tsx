@@ -1,13 +1,15 @@
-import {HTMLAttributes} from 'react';
+import { HTMLAttributes } from 'react';
 import * as React from 'react';
 import styles from './SubTitle.scss';
 
-interface ISubTitle extends HTMLAttributes<HTMLHeadingElement> {
+interface SubTitleProps extends HTMLAttributes<HTMLHeadingElement> {
     label: string;
 }
 
-const SubTitle: React.FC<ISubTitle> = ({label, ...rest}) => (
-    <h3 className={styles.subtitle} {...rest}>{label}</h3>
-);
-
-export default SubTitle;
+export default function SubTitle({ label, ...rest }: SubTitleProps) {
+    return (
+        <h3 className={styles.subtitle} {...rest}>
+            {label}
+        </h3>
+    );
+}

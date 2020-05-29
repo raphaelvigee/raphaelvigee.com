@@ -1,19 +1,19 @@
 import * as React from 'react';
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 import TiltRaccoon from '../Muggles/TiltRaccoon';
-import {getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath} from './fs';
-import {ICommand} from './utils';
+import { getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath } from './fs';
+import { ICommand } from './utils';
 
 export const cmdEcho: ICommand = {
     name: 'echo',
-    run(_, args, {write}) {
+    run(_, args, { write }) {
         write(args);
     },
 };
 
 export const cmdCd: ICommand = {
     name: 'cd',
-    run(_, args, {cwd, setCwd, write, fs}) {
+    run(_, args, { cwd, setCwd, write, fs }) {
         nodeHelper(write, fs, cwd, args, (node, absPath) => {
             if (isFolder(node)) {
                 setCwd(absPath);
@@ -46,7 +46,7 @@ function nodeHelper(
 export const catCmd: ICommand = {
     name: 'cat',
     run(_, args, props) {
-        const {write, fs, cwd} = props;
+        const { write, fs, cwd } = props;
 
         nodeHelper(write, fs, cwd, args, (node) => {
             if (isFile(node)) {
@@ -60,14 +60,14 @@ export const catCmd: ICommand = {
 
 export const pwdCmd: ICommand = {
     name: 'pwd',
-    run(_, args, {write, cwd}) {
+    run(_, args, { write, cwd }) {
         write(pathToString(cwd));
     },
 };
 
 export const lsCmd: ICommand = {
     name: 'ls',
-    run(_, args, {write, cwd, fs}) {
+    run(_, args, { write, cwd, fs }) {
         nodeHelper(write, fs, cwd, args, (node, absPath) => {
             if (isFile(node)) {
                 write(pathToString(absPath));
@@ -85,8 +85,8 @@ export const lsCmd: ICommand = {
 
 function printTree(node: IFsNode, prevSpacer: string, level: number, isLast: boolean, write) {
     const isRoot = level === 0;
-    const currentSpacer = isRoot ? '' : (isLast ? '└── ' : '├── ');
-    const childSpacer =  isRoot ? '' : (isLast ? '    ' : '│   ');
+    const currentSpacer = isRoot ? '' : isLast ? '└── ' : '├── ';
+    const childSpacer = isRoot ? '' : isLast ? '    ' : '│   ';
 
     write(prevSpacer + currentSpacer + node.name);
 
@@ -103,7 +103,7 @@ function printTree(node: IFsNode, prevSpacer: string, level: number, isLast: boo
 
 export const treeCmd: ICommand = {
     name: 'tree',
-    run(_, args, {write, cwd, fs}) {
+    run(_, args, { write, cwd, fs }) {
         nodeHelper(write, fs, cwd, args, (node, absPath) => {
             printTree(node, '', 0, true, write);
         });
@@ -112,21 +112,21 @@ export const treeCmd: ICommand = {
 
 export const clearCmd: ICommand = {
     name: 'clear',
-    run(_, args, {clear}) {
+    run(_, args, { clear }) {
         clear();
     },
 };
 
 export const shrugCmd: ICommand = {
     name: 'shrug',
-    run(_, args, {write}) {
+    run(_, args, { write }) {
         write('¯\\_(ツ)_/¯');
     },
 };
 
 export const rmCmd: ICommand = {
     name: 'rm',
-    run(_, args, {write}) {
+    run(_, args, { write }) {
         if (args === '/') {
             const win = window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
             if (win) {

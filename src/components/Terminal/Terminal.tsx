@@ -1,31 +1,25 @@
 import * as React from 'react';
-import {
-    MouseEvent,
-    ReactNode,
-    SyntheticEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
-import {Simulate} from 'react-dom/test-utils';
+import { MouseEvent, ReactNode, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Simulate } from 'react-dom/test-utils';
 import useEventListener from '../../hooks/useEventListener';
-import {IFsNode} from './fs';
+import { IFsNode } from './fs';
 import styles from './Terminal.scss';
-import {ICommand, runCommand} from './utils';
+import { ICommand, runCommand } from './utils';
 
-function Line({prompt, content}: {prompt: boolean, content: ReactNode}) {
+function Line({ prompt, content }: { prompt: boolean; content: ReactNode }) {
     return (
-        <div className={styles.line}>{prompt && '$ '}{content}</div>
+        <div className={styles.line}>
+            {prompt && '$ '}
+            {content}
+        </div>
     );
 }
 
-function Caret({symbol = <>&nbsp;</>}: {symbol?: ReactNode}) {
+function Caret({ symbol = <>&nbsp;</> }: { symbol?: ReactNode }) {
     return <div className={styles.caret}>{symbol}</div>;
 }
 
-function CurrentLine({line, pos}: {line: string, pos: number}) {
+function CurrentLine({ line, pos }: { line: string; pos: number }) {
     const content = line.split('').map((l, i) => {
         if (i === pos) {
             return <Caret key={'caret'} symbol={l} />;
@@ -38,9 +32,7 @@ function CurrentLine({line, pos}: {line: string, pos: number}) {
         content.push(<Caret key={'caret'} />);
     }
 
-    return (
-        <Line prompt={true} content={content} />
-    );
+    return <Line prompt={true} content={content} />;
 }
 
 interface ITerminal {
@@ -69,7 +61,7 @@ function findCmds(cmds: ICommand[], str: string) {
 
 function useHistory() {
     const [history, setHistory] = useState<string[]>([]);
-    const [i, setI] = useState<number|null>(null);
+    const [i, setI] = useState<number | null>(null);
     const maxI = history.length > 0 ? history.length - 1 : null;
 
     function add(e: string) {
@@ -108,7 +100,7 @@ function useHistory() {
     return [add, elem, prev, next, cancelI] as const;
 }
 
-export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null, initCmds = []}: ITerminal) {
+export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null, initCmds = [] }: ITerminal) {
     const [lines, setLines] = useState<ILine[]>([]);
     const [currentLine, setCurrentLine] = useState('');
     const [cwd, setCwd] = useState<string[]>(initCwd);
@@ -118,8 +110,9 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
     const [addHistory, historyElement, prevHistory, nextHistory] = useHistory();
     const [caretPos, setCaretPos] = useState(-1);
 
-    const writeLine = useCallback((input: boolean, content: ReactNode) =>
-        setLines((l) => [...l, {input, content}]), [setLines]);
+    const writeLine = useCallback((input: boolean, content: ReactNode) => setLines((l) => [...l, { input, content }]), [
+        setLines,
+    ]);
     const writeNonPrompt = useCallback((c: ReactNode) => writeLine(false, c), [writeLine]);
 
     function gateCapture(e: SyntheticEvent | UIEvent) {
@@ -150,14 +143,15 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
         ];
     }, [userCmds]);
 
-    const runCmdWithContext = (l: string) => runCommand(cmds, {
-        clear: () => setLines([]),
-        cwd,
-        fs,
-        line: l,
-        setCwd,
-        write: writeNonPrompt,
-    });
+    const runCmdWithContext = (l: string) =>
+        runCommand(cmds, {
+            clear: () => setLines([]),
+            cwd,
+            fs,
+            line: l,
+            setCwd,
+            write: writeNonPrompt,
+        });
 
     const keydownCb = useCallback(
         (event: KeyboardEvent) => {
@@ -202,16 +196,17 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
                     setCurrentLine('');
                     break;
             }
-    }, [cmds, writeLine, currentLine, setCurrentLine]);
+        },
+        [cmds, writeLine, currentLine, setCurrentLine],
+    );
     useEventListener('keydown', keydownCb);
 
-    const syncCaret = useCallback(
-        () => {
-            if (inputRef.current) {
-                const ss = inputRef.current.selectionStart;
-                setCaretPos( ss !== null ? ss : -1);
-            }
-        }, [cmds, writeLine, currentLine, setCurrentLine]);
+    const syncCaret = useCallback(() => {
+        if (inputRef.current) {
+            const ss = inputRef.current.selectionStart;
+            setCaretPos(ss !== null ? ss : -1);
+        }
+    }, [cmds, writeLine, currentLine, setCurrentLine]);
     useEventListener('keyup', syncCaret);
     useEventListener('keydown', syncCaret);
 
@@ -235,42 +230,52 @@ export default function Terminal({cmds: userCmds, fs, initCwd = [], motd = null,
 
     const scrollBottom = useCallback(() => {
         if (bottomRef.current) {
-            bottomRef.current.scrollIntoView({behavior: 'smooth', block: 'end'});
+            bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
     }, [bottomRef]);
 
     useEffect(scrollBottom, [lines, running, currentLine]);
 
-    const focusInput = useCallback((e: MouseEvent) => {
-        if (gateCapture(e)) {
-            return;
-        }
+    const focusInput = useCallback(
+        (e: MouseEvent) => {
+            if (gateCapture(e)) {
+                return;
+            }
 
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [inputRef]);
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        },
+        [inputRef],
+    );
 
-    const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentLine(e.target.value);
-        syncCaret();
-        scrollBottom();
-    }, [setCurrentLine, scrollBottom]);
+    const onInputChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setCurrentLine(e.target.value);
+            syncCaret();
+            scrollBottom();
+        },
+        [setCurrentLine, scrollBottom],
+    );
 
     return (
         <div className={styles.terminal} onClick={focusInput}>
-            {lines.map((c, i) => <Line key={i} prompt={c.input} content={c.content} />)}
+            {lines.map((c, i) => (
+                <Line key={i} prompt={c.input} content={c.content} />
+            ))}
             {!running && <CurrentLine line={currentLine} pos={caretPos} />}
-            <input type='text'
-                   className={styles.hiddenInput}
-                   ref={inputRef}
-                   value={currentLine}
-                   autoCapitalize={'none'}
-                   autoComplete={'off'}
-                   autoCorrect={'off'}
-                   spellCheck={false}
-                   autoFocus={true}
-                   onChange={onInputChange} />
+            <input
+                type="text"
+                className={styles.hiddenInput}
+                ref={inputRef}
+                value={currentLine}
+                autoCapitalize={'none'}
+                autoComplete={'off'}
+                autoCorrect={'off'}
+                spellCheck={false}
+                autoFocus={true}
+                onChange={onInputChange}
+            />
             <div ref={bottomRef} />
         </div>
     );

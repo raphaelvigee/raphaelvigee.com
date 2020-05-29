@@ -1,32 +1,31 @@
-import {createRef, useEffect} from 'react';
+import { createRef, useEffect } from 'react';
 import * as React from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import VanillaTilt from 'vanilla-tilt';
-// @ts-ignore
 import raccoon from '../../assets/images/raccoon.svg';
 
 interface IVanillaTilt extends HTMLImageElement {
-    vanillaTilt: any;
+    vanillaTilt: VanillaTilt;
 }
 
-const TiltRaccoon: React.FC = () => {
-    const img = createRef<IVanillaTilt>();
+export default function TiltRaccoon() {
+    const ref = createRef<IVanillaTilt>();
 
     useEffect(() => {
-        VanillaTilt.init(img.current, {
-            perspective: 1000,
-            reverse: true,
-            scale: 1.1,
-        });
+        const img = ref.current;
+        if (img) {
+            VanillaTilt.init(img, {
+                perspective: 1000,
+                reverse: true,
+                scale: 1.1,
+            });
 
-        return () => {
-            if (img.current) {
-                img.current.vanillaTilt.destroy();
-            }
-        };
+            return () => {
+                img.vanillaTilt.destroy();
+            };
+        }
     }, []);
 
-    return <img style={{width: '100%'}} src={raccoon} alt='Raccoon' ref={img}/>;
-};
-
-export default TiltRaccoon;
+    return <img style={{ width: '100%' }} src={raccoon} alt="Raccoon" ref={ref} />;
+}

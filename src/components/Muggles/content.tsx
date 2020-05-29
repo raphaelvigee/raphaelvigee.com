@@ -5,8 +5,8 @@ import EducationComponent from './Education';
 import ExperiencesComponent from './Experiences';
 import HacksComponent from './Hacks';
 import ResumeComponent from './Resume';
-import {catOpen} from '../Terminal/fs';
-import {IRunProps} from '../Terminal/utils';
+import { catOpen } from '../Terminal/fs';
+import { IRunProps } from '../Terminal/utils';
 
 function printNl(write) {
     write(` `);
@@ -17,12 +17,17 @@ function printTitle(title: string, write) {
     write('='.repeat(title.length));
 }
 
-function printEntry<O>(keys: {[s in keyof O]?: string}, o: O, write) {
+function printEntry<O>(keys: { [s in keyof O]?: string }, o: O, write) {
     const m = Math.max(...Object.keys(keys).map((k) => k.length));
 
     for (const [k, name] of Object.entries(keys) as Array<[keyof O, string]>) {
         if (k in o) {
-            write(<>{`${name}${' '.repeat(m - name.length)}: `}{o[k]}</>);
+            write(
+                <>
+                    {`${name}${' '.repeat(m - name.length)}: `}
+                    {o[k]}
+                </>,
+            );
         }
     }
 
@@ -34,14 +39,18 @@ export const Pages = [
         name: 'Education',
         path: 'education',
         component: EducationComponent,
-        cat: (_, {write}: IRunProps) => {
+        cat: (_, { write }: IRunProps) => {
             Education.forEach((e) => {
-                printEntry({
-                    date: 'Date',
-                    title: 'Title',
-                    details: 'Details',
-                    location: 'Location',
-                }, e, write);
+                printEntry(
+                    {
+                        date: 'Date',
+                        title: 'Title',
+                        details: 'Details',
+                        location: 'Location',
+                    },
+                    e,
+                    write,
+                );
             });
         },
     },
@@ -49,13 +58,17 @@ export const Pages = [
         name: 'Hacks',
         path: 'hacks',
         component: HacksComponent,
-        cat: (_, {write}: IRunProps) => {
+        cat: (_, { write }: IRunProps) => {
             Hacks.forEach((e) => {
-                printEntry({
-                    date: 'Date',
-                    title: 'Title',
-                    location: 'Location',
-                }, e, write);
+                printEntry(
+                    {
+                        date: 'Date',
+                        title: 'Title',
+                        location: 'Location',
+                    },
+                    e,
+                    write,
+                );
             });
         },
     },
@@ -63,28 +76,35 @@ export const Pages = [
         name: 'Experiences',
         path: 'experiences',
         component: ExperiencesComponent,
-        cat: (_, {write}: IRunProps) => {
+        cat: (_, { write }: IRunProps) => {
             printTitle('Jobs', write);
             JobExperiences.forEach((e) => {
-                printEntry({
-                    date: 'Date',
-                    title: 'Title',
-                    details: 'Details',
-                    location: 'Location',
-                }, e, write);
+                printEntry(
+                    {
+                        date: 'Date',
+                        title: 'Title',
+                        details: 'Details',
+                        location: 'Location',
+                    },
+                    e,
+                    write,
+                );
             });
 
             printNl(write);
 
             printTitle('Projects', write);
             ProjectExperiences.forEach((e) => {
-                printEntry({
-                    title: 'Title',
-                    description: 'Description',
-                    link: 'Link',
-                }, e, write);
+                printEntry(
+                    {
+                        title: 'Title',
+                        description: 'Description',
+                        link: 'Link',
+                    },
+                    e,
+                    write,
+                );
             });
-
         },
     },
     {
@@ -97,7 +117,7 @@ export const Pages = [
         name: 'Contact',
         path: 'contact',
         component: ContactComponent,
-        cat: (_, {write}: IRunProps) => {
+        cat: (_, { write }: IRunProps) => {
             write(<ContactComponent />);
         },
     },
@@ -129,73 +149,169 @@ export const Education = [
 
 export const Hacks = [
     {
-        date: <>15<sup>th</sup> - 17<sup>th</sup> February 2019</>,
+        date: (
+            <>
+                15<sup>th</sup> - 17<sup>th</sup> February 2019
+            </>
+        ),
         title: <>Finalist & “Best Deep Learning Hack” at Treehacks</>,
         location: 'Stanford University, CA, USA',
     },
     {
-        date: <>1<sup>st</sup> December 2018</>,
-        title: <>1<sup>st</sup> at MLH Local Hack Day</>,
+        date: (
+            <>
+                1<sup>st</sup> December 2018
+            </>
+        ),
+        title: (
+            <>
+                1<sup>st</sup> at MLH Local Hack Day
+            </>
+        ),
         location: 'San Francisco, CA, USA',
     },
     {
-        date: <>17<sup>th</sup> November 2018</>,
-        title: <>2<sup>nd</sup> place in “Game Development” at SacHacks</>,
+        date: (
+            <>
+                17<sup>th</sup> November 2018
+            </>
+        ),
+        title: (
+            <>
+                2<sup>nd</sup> place in “Game Development” at SacHacks
+            </>
+        ),
         location: 'Sacramento, CA, USA',
     },
     {
-        date: <>2<sup>nd</sup> December 2017</>,
+        date: (
+            <>
+                2<sup>nd</sup> December 2017
+            </>
+        ),
         title: '“Best Project Idea” at MLH - Local Hack Day 2017',
         location: 'University of Kent, United Kingdom',
     },
     {
-        date: <>26<sup>th</sup> - 27<sup>th</sup> October 2017</>,
+        date: (
+            <>
+                26<sup>th</sup> - 27<sup>th</sup> October 2017
+            </>
+        ),
         title: 'Cisco University Challenge 2017',
         location: 'Cisco Systems, Bedfont Lakes, United Kingdom',
     },
     {
-        date: <>18<sup>th</sup> May 2016</>,
+        date: (
+            <>
+                18<sup>th</sup> May 2016
+            </>
+        ),
         title: '“Award of scientific innovation” at National Olympiad finals of Engineering Sciences 2016',
         location: 'Schneider Electric, Rueil-Malmaison, France',
     },
     {
-        date: <>13<sup>th</sup> April 2016</>,
-        title: <>2<sup>nd</sup> at Academic Olympiad finals of Engineering Sciences of Paris 2016</>,
+        date: (
+            <>
+                13<sup>th</sup> April 2016
+            </>
+        ),
+        title: (
+            <>
+                2<sup>nd</sup> at Academic Olympiad finals of Engineering Sciences of Paris 2016
+            </>
+        ),
         location: 'EIVP, Paris, France',
     },
     {
-        date: <>14<sup>th</sup> March 2016</>,
-        title: <>33<sup>rd</sup> out of 1200 at Meilleur Dev de France 2016 - General</>,
+        date: (
+            <>
+                14<sup>th</sup> March 2016
+            </>
+        ),
+        title: (
+            <>
+                33<sup>rd</sup> out of 1200 at Meilleur Dev de France 2016 - General
+            </>
+        ),
         location: 'Paris, France',
     },
     {
-        date: <>14<sup>th</sup> March 2016</>,
-        title: <>4<sup>th</sup> at Meilleur Dev de France 2016 - PHP</>,
+        date: (
+            <>
+                14<sup>th</sup> March 2016
+            </>
+        ),
+        title: (
+            <>
+                4<sup>th</sup> at Meilleur Dev de France 2016 - PHP
+            </>
+        ),
         location: 'Paris, France',
     },
     {
-        date: <>7<sup>th</sup> May 2015</>,
-        title: <>5<sup>th</sup> out of 400 at Open du Web #5</>,
+        date: (
+            <>
+                7<sup>th</sup> May 2015
+            </>
+        ),
+        title: (
+            <>
+                5<sup>th</sup> out of 400 at Open du Web #5
+            </>
+        ),
         location: 'Paris, France',
     },
     {
-        date: <>6<sup>th</sup> May 2015</>,
-        title: <>3<sup>rd</sup> at Academic Olympiad finals of Engineering Sciences of Paris 2015</>,
+        date: (
+            <>
+                6<sup>th</sup> May 2015
+            </>
+        ),
+        title: (
+            <>
+                3<sup>rd</sup> at Academic Olympiad finals of Engineering Sciences of Paris 2015
+            </>
+        ),
         location: 'GRDF, Paris, France',
     },
     {
-        date: <>12<sup>th</sup> March 2015</>,
-        title: <>66<sup>th</sup> at Meilleur Dev de France 2015 - PHP</>,
+        date: (
+            <>
+                12<sup>th</sup> March 2015
+            </>
+        ),
+        title: (
+            <>
+                66<sup>th</sup> at Meilleur Dev de France 2015 - PHP
+            </>
+        ),
         location: '42 School, Paris, France',
     },
     {
-        date: <>15<sup>th</sup> May 2014</>,
-        title: <>270<sup>th</sup> out of 1000 at Meilleur Dev de France 2014 - General</>,
+        date: (
+            <>
+                15<sup>th</sup> May 2014
+            </>
+        ),
+        title: (
+            <>
+                270<sup>th</sup> out of 1000 at Meilleur Dev de France 2014 - General
+            </>
+        ),
         location: '42 School, Paris, France',
     },
     {
-        date: <>28<sup>th</sup> November 2013</>,
-        title: <>5<sup>th</sup> out of 200 at Open du Web #4</>,
+        date: (
+            <>
+                28<sup>th</sup> November 2013
+            </>
+        ),
+        title: (
+            <>
+                5<sup>th</sup> out of 200 at Open du Web #4
+            </>
+        ),
         location: 'Paris, France',
     },
 ];
@@ -243,13 +359,13 @@ export const JobExperiences = [
     },
 ];
 
-const TAG_PHP = {name: 'PHP'};
-const TAG_SYMFONY3 = {name: 'Symfony 3'};
-const TAG_REACT = {name: 'React'};
-const TAG_NODE = {name: 'NodeJs'};
-const TAG_C = {name: 'C'};
-const TAG_CPP = {name: 'C++'};
-const TAG_JAVA = {name: 'Java'};
+const TAG_PHP = { name: 'PHP' };
+const TAG_SYMFONY3 = { name: 'Symfony 3' };
+const TAG_REACT = { name: 'React' };
+const TAG_NODE = { name: 'NodeJs' };
+const TAG_C = { name: 'C' };
+const TAG_CPP = { name: 'C++' };
+const TAG_JAVA = { name: 'Java' };
 
 export const ProjectExperiences = [
     {

@@ -1,5 +1,5 @@
-import {Dispatch, ReactNode, SetStateAction} from 'react';
-import {IFsNode} from './fs';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { IFsNode } from './fs';
 
 export interface IRunProps {
     write: (c: ReactNode) => void;

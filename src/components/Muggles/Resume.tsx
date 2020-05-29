@@ -9,13 +9,13 @@ const CVUrl = `${CVShort}?#zoom=FitH&scrollbar=0&toolbar=0&navpanes=0`;
 
 const Resume: React.FC = () => (
     <Page>
-        <Title style={{marginBottom: 30}} label={'Résumé'}/>
+        <Title style={{ marginBottom: 30 }} label={'Résumé'} />
 
         <a href={CVShort} download={'CV Raphael Vigee'}>
             <Button label={'Download'} />
         </a>
 
-        <object className={styles.pdf} type='application/pdf' data={CVUrl}>
+        <object className={styles.pdf} type="application/pdf" data={CVUrl}>
             <p>Insert your error message here, if the PDF cannot be displayed.</p>
         </object>
     </Page>

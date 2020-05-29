@@ -1,19 +1,17 @@
-import {HTMLAttributes} from 'react';
+import { HTMLAttributes } from 'react';
 import * as React from 'react';
 import GradientLine from './GradientLine';
 import styles from './Title.scss';
 
-interface ITitle extends HTMLAttributes<HTMLDivElement> {
+interface TitleProps extends HTMLAttributes<HTMLDivElement> {
     label: string;
 }
 
-const Title: React.FC<ITitle> = ({label, ...rest}) => {
+export default function Title({ label, ...rest }: TitleProps) {
     return (
         <div {...rest}>
             <h1 className={styles.title}>{label}</h1>
-            <GradientLine width={100}/>
+            <GradientLine width={100} />
         </div>
     );
-};
-
-export default Title;
+}
