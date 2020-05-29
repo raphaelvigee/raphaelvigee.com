@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Redirect} from 'react-router';
 import TiltRaccoon from '../TiltRaccoon';
 import {getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath} from './fs';
 import {ICommand} from './utils';
@@ -126,6 +127,13 @@ export const shrugCmd: ICommand = {
 export const rmCmd: ICommand = {
     name: 'rm',
     run(_, args, {write}) {
+        if (args === '/') {
+            const win = window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+            if (win) {
+                win.focus();
+            }
+        }
+
         write(`rm: cannot remove ‘${args}’: Operation not permitted`);
     },
 };
