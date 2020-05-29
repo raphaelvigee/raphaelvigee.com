@@ -16,5 +16,6 @@ module.exports = {
     rules: {
         // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
         'react/no-unescaped-entities': 'off',
+        'no-unused-vars': 'error',
     },
 };

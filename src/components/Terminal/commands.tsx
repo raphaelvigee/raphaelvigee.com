@@ -1,7 +1,4 @@
-import * as React from 'react';
-import { Redirect } from 'react-router';
-import TiltRaccoon from '../Muggles/TiltRaccoon';
-import { getFs, IFsNode, isFile, isFolder, join, parsePath, pathToString, stringToPath } from './fs';
+import { getFs, IFsNode, isFile, isFolder, parsePath, pathToString } from './fs';
 import { ICommand } from './utils';
 
 export const cmdEcho: ICommand = {
@@ -104,7 +101,7 @@ function printTree(node: IFsNode, prevSpacer: string, level: number, isLast: boo
 export const treeCmd: ICommand = {
     name: 'tree',
     run(_, args, { write, cwd, fs }) {
-        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+        nodeHelper(write, fs, cwd, args, (node) => {
             printTree(node, '', 0, true, write);
         });
     },

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import styles from './Button.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

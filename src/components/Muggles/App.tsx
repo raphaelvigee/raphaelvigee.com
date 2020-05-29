@@ -9,7 +9,7 @@ import styles from './App.scss';
 import Home from './Home';
 import ScrollToTop from './Utils/ScrollTop';
 import cmds from '../Terminal/commands';
-import { catOpen, FsFile, FsFolder, IFsNode } from '../Terminal/fs';
+import { FsFile, FsFolder, IFsNode } from '../Terminal/fs';
 import Terminal from '../Terminal/Terminal';
 import TiltRaccoon from './TiltRaccoon';
 

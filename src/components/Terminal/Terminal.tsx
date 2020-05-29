@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { MouseEvent, ReactNode, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Simulate } from 'react-dom/test-utils';
 import useEventListener from '../../hooks/useEventListener';
 import { IFsNode } from './fs';
 import styles from './Terminal.scss';
@@ -175,7 +174,7 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
                 case 'Tab':
                     event.preventDefault();
 
-                    const [name, ...rest] = currentLine.split(' ');
+                    const [name /*, ...rest*/] = currentLine.split(' ');
 
                     if (!currentLine.includes(' ')) {
                         const candidates = findCmds(cmds, name);
