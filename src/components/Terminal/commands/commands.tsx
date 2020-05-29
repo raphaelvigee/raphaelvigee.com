@@ -1,5 +1,5 @@
 import { getFs, IFsNode, isFile, isFolder, parsePath, pathToString } from '../fs';
-import { ICommand } from '../utils';
+import { ICommand, t } from '../utils';
 
 export const cmdEcho: ICommand = {
     name: 'echo',
@@ -118,6 +118,22 @@ export const shrugCmd: ICommand = {
     name: 'shrug',
     run(_, args, { write }) {
         write('¯\\_(ツ)_/¯');
+    },
+};
+
+const dino = t(`
+               __
+              / _)
+     _/\\/\\/\\_/ /
+   _|         /
+ _|  (  | (  |
+/__.-'|_|--|_|  <- You
+`);
+
+export const perlCmd: ICommand = {
+    name: 'perl',
+    run(_, args, { write }) {
+        write(dino);
     },
 };
 

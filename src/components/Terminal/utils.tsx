@@ -32,3 +32,7 @@ export function runCommand(commands: ICommand[], props: IRunProps) {
 
     props.write(`${cmdName}: command not found`);
 }
+
+export function t(txt: string) {
+    return txt.substr(1);
+}

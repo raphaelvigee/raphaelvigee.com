@@ -1,12 +1,12 @@
-import { IRunProps } from '../utils';
+import { IRunProps, t } from '../utils';
 
-const cow = `
+const cow = t(`
         \\   ^__^
          \\  (oo)\\_______
             (__)\\       )\\/\\
                 ||----w |
                 ||     ||
-`;
+`);
 
 const cowsay = {
     name: 'cowsay',
