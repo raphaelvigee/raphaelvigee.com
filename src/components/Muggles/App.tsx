@@ -68,7 +68,6 @@ const fs: IFsNode = new FsFolder({
 
 export default function App() {
     useEffect(() => {
-        // tslint:disable-next-line:no-console
         console.info(`Since you are reading this, you should checkout ${window.location.origin}/x ;)`);
     }, []);
 

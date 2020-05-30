@@ -3,7 +3,7 @@ import { MouseEvent, ReactNode, SyntheticEvent, useCallback, useEffect, useMemo,
 import useEventListener from '../../hooks/useEventListener';
 import { IFsNode } from './fs';
 import styles from './Terminal.scss';
-import { ICommand, runCommand } from './utils';
+import { ICommand, runCommand, usage } from './utils';
 
 function Line({ prompt, content }: { prompt: boolean; content: ReactNode }) {
     return (
@@ -128,15 +128,39 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
         return false;
     }
 
-    const cmds = useMemo(() => {
+    const cmds = useMemo<ICommand[]>(() => {
         return [
             ...userCmds,
             {
                 name: 'help',
-                run: () => {
+                short: 'Seek help',
+                args: [],
+                run: ({ write }) => {
+                    const m = Math.max(...cmds.map((c) => c.name.length));
+
                     for (const cmd of cmds) {
-                        writeNonPrompt(cmd.name);
+                        write(`${cmd.name}${' '.repeat(m - cmd.name.length)}: ${cmd.short}`);
                     }
+                },
+            },
+            {
+                name: 'man',
+                short: 'Prints command usage',
+                args: [{ name: 'cmd', mandatory: true }],
+                run: ({ write, args }) => {
+                    const cmdName = args[0];
+
+                    for (const cmd of cmds) {
+                        if (cmd.name === cmdName) {
+                            write(`${cmd.name}: ${cmd.short}`);
+                            write(` `);
+                            write(`Usage:`);
+                            write(`    $ ${usage(cmd)}`);
+                            return;
+                        }
+                    }
+
+                    write(`command '${cmdName}' not found`);
                 },
             },
         ];

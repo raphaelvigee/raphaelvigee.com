@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 const webpack = require('webpack');
 const Encore = require('@symfony/webpack-encore');
 const HtmlWebpackPlugin = require('html-webpack-plugin');

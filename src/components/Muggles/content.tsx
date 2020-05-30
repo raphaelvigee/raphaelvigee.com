@@ -6,7 +6,7 @@ import ExperiencesComponent from './Experiences';
 import HacksComponent from './Hacks';
 import ResumeComponent from './Resume';
 import { catOpen } from '../Terminal/fs';
-import { IRunProps } from '../Terminal/utils';
+import { RunProps } from '../Terminal/utils';
 
 function printNl(write) {
     write(` `);
@@ -39,7 +39,7 @@ export const Pages = [
         name: 'Education',
         path: 'education',
         component: EducationComponent,
-        cat: (_, { write }: IRunProps) => {
+        cat: (_, { write }: RunProps) => {
             Education.forEach((e) => {
                 printEntry(
                     {
@@ -58,7 +58,7 @@ export const Pages = [
         name: 'Hacks',
         path: 'hacks',
         component: HacksComponent,
-        cat: (_, { write }: IRunProps) => {
+        cat: (_, { write }: RunProps) => {
             Hacks.forEach((e) => {
                 printEntry(
                     {
@@ -76,7 +76,7 @@ export const Pages = [
         name: 'Experiences',
         path: 'experiences',
         component: ExperiencesComponent,
-        cat: (_, { write }: IRunProps) => {
+        cat: (_, { write }: RunProps) => {
             printTitle('Jobs', write);
             JobExperiences.forEach((e) => {
                 printEntry(
@@ -117,7 +117,7 @@ export const Pages = [
         name: 'Contact',
         path: 'contact',
         component: ContactComponent,
-        cat: (_, { write }: IRunProps) => {
+        cat: (_, { write }: RunProps) => {
             write(<ContactComponent />);
         },
     },

@@ -3,15 +3,19 @@ import { ICommand, t } from '../utils';
 
 export const cmdEcho: ICommand = {
     name: 'echo',
-    run(_, args, { write }) {
-        write(args);
+    short: 'Print text to the terminal',
+    args: [{ name: 'str' }],
+    run({ write, args }) {
+        write(args[0]);
     },
 };
 
 export const cmdCd: ICommand = {
     name: 'cd',
-    run(_, args, { cwd, setCwd, write, fs }) {
-        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+    short: 'Change directory',
+    args: [{ name: 'directory', default: '.' }],
+    run({ cwd, setCwd, write, fs, args }) {
+        nodeHelper(write, fs, cwd, args[0], (node, absPath) => {
             if (isFolder(node)) {
                 setCwd(absPath);
                 return;
@@ -42,10 +46,12 @@ function nodeHelper(
 
 export const catCmd: ICommand = {
     name: 'cat',
-    run(_, args, props) {
-        const { write, fs, cwd } = props;
+    short: 'Print file',
+    args: [{ name: 'file', mandatory: true }],
+    run(props) {
+        const { write, fs, cwd, args } = props;
 
-        nodeHelper(write, fs, cwd, args, (node) => {
+        nodeHelper(write, fs, cwd, args[0], (node) => {
             if (isFile(node)) {
                 if (node.cat) {
                     node.cat(node, props);
@@ -57,15 +63,19 @@ export const catCmd: ICommand = {
 
 export const pwdCmd: ICommand = {
     name: 'pwd',
-    run(_, args, { write, cwd }) {
+    short: 'Print current directory name',
+    args: [],
+    run({ write, cwd }) {
         write(pathToString(cwd));
     },
 };
 
 export const lsCmd: ICommand = {
     name: 'ls',
-    run(_, args, { write, cwd, fs }) {
-        nodeHelper(write, fs, cwd, args, (node, absPath) => {
+    short: 'List directory content',
+    args: [{ name: 'path' }],
+    run({ write, cwd, fs, args }) {
+        nodeHelper(write, fs, cwd, args[0], (node, absPath) => {
             if (isFile(node)) {
                 write(pathToString(absPath));
                 return;
@@ -100,8 +110,10 @@ function printTree(node: IFsNode, prevSpacer: string, level: number, isLast: boo
 
 export const treeCmd: ICommand = {
     name: 'tree',
-    run(_, args, { write, cwd, fs }) {
-        nodeHelper(write, fs, cwd, args, (node) => {
+    short: 'Print hierarchical view of the filesystem',
+    args: [{ name: 'path', default: '.' }],
+    run({ write, cwd, fs, args }) {
+        nodeHelper(write, fs, cwd, args[0], (node) => {
             printTree(node, '', 0, true, write);
         });
     },
@@ -109,14 +121,18 @@ export const treeCmd: ICommand = {
 
 export const clearCmd: ICommand = {
     name: 'clear',
-    run(_, args, { clear }) {
+    short: 'Clear the terminal',
+    args: [],
+    run({ clear }) {
         clear();
     },
 };
 
 export const shrugCmd: ICommand = {
     name: 'shrug',
-    run(_, args, { write }) {
+    short: '¯\\_(ツ)_/¯',
+    args: [],
+    run({ write }) {
         write('¯\\_(ツ)_/¯');
     },
 };
@@ -132,15 +148,20 @@ const dino = t(`
 
 export const perlCmd: ICommand = {
     name: 'perl',
-    run(_, args, { write }) {
+    short: 'The Perl programming language',
+    args: [],
+    anyArgs: true,
+    run({ write }) {
         write(dino);
     },
 };
 
 export const rmCmd: ICommand = {
     name: 'rm',
-    run(_, args, { write }) {
-        if (args === '/') {
+    short: 'Remove file/directory',
+    args: [{ name: 'path', mandatory: true }],
+    run({ write, args }) {
+        if (args[0] === '/') {
             const win = window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
             if (win) {
                 win.focus();
