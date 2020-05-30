@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import * as React from 'react';
-import { Pages } from './content';
+import { Pages } from '../../content';
 import Sidebar from './Sidebar';
 
 import cx from 'classnames';

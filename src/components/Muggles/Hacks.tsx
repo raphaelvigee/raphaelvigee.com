@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Hacks as HacksItems } from './content';
+import { Hacks as HacksItems } from '../../content';
 import Entry from './Utils/Entry';
 import Page from './Page';
 import Title from './Utils/Title';

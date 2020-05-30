@@ -1,12 +1,12 @@
 import * as React from 'react';
-import CVShort from '../../assets/cv/CV_Raphael_Vigee.short.pdf';
-import ContactComponent from './Contact';
-import EducationComponent from './Education';
-import ExperiencesComponent from './Experiences';
-import HacksComponent from './Hacks';
-import ResumeComponent from './Resume';
-import { catOpen } from '../Terminal/fs';
-import { RunProps } from '../Terminal/utils';
+import CVShort from './assets/cv/CV_Raphael_Vigee.short.pdf';
+import ContactComponent from './components/Muggles/Contact';
+import EducationComponent from './components/Muggles/Education';
+import ExperiencesComponent from './components/Muggles/Experiences';
+import HacksComponent from './components/Muggles/Hacks';
+import ResumeComponent from './components/Muggles/Resume';
+import { catOpen } from './components/Terminal/fs';
+import { RunProps } from './components/Terminal/utils';
 
 function printNl(write) {
     write(` `);

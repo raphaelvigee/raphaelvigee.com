@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { JobExperiences, ProjectExperiences } from './content';
+import { JobExperiences, ProjectExperiences } from '../../content';
 import Entry from './Utils/Entry';
 import Page from './Page';
 import ProjectEntry from './ProjectEntry';

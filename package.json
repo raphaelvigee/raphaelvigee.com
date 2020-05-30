@@ -46,7 +46,7 @@
   },
   "scripts": {
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
-    "lint:fix": "yarn lint --fix",
+    "fix": "yarn lint --fix",
     "test": "jest",
     "server": "encore dev-server --hot --port 4567",
     "start": "yarn server",
