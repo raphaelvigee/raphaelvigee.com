@@ -27,9 +27,9 @@ jobs:
       - run:
           name: Lint
           command: yarn lint
-#      - run:
-#          name: Run tests
-#          command: npm test
+      - run:
+          name: Run tests
+          command: yarn test
       - deploy:
           name: Deploy
           command: ./.circleci/deploy.sh
