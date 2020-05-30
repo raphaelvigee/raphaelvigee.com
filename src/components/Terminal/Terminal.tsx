@@ -166,15 +166,18 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
         ];
     }, [userCmds]);
 
-    const runCmdWithContext = (l: string) =>
-        runCommand(cmds, {
-            clear: () => setLines([]),
-            cwd,
-            fs,
-            line: l,
-            setCwd,
-            write: writeNonPrompt,
-        });
+    const runCmdWithContext = (line: string) =>
+        runCommand(
+            cmds,
+            {
+                clear: () => setLines([]),
+                cwd,
+                fs,
+                setCwd,
+                write: writeNonPrompt,
+            },
+            line,
+        );
 
     const keydownCb = useCallback(
         (event: KeyboardEvent) => {

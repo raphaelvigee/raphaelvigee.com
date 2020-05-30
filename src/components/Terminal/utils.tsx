@@ -1,9 +1,8 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { IFsNode } from './fs';
 
-interface RunCommandProps {
+export interface RunCommandProps {
     write: (c: ReactNode) => void;
-    line: string;
     fs: IFsNode;
     cwd: string[];
     setCwd: Dispatch<SetStateAction<string[]>>;
@@ -11,7 +10,6 @@ interface RunCommandProps {
 }
 
 export interface RunProps extends RunCommandProps {
-    cmdName: string;
     args: string[];
 }
 
@@ -75,7 +73,9 @@ export function parseArgs(s: string) {
                 if (inStr) {
                     acc += c;
                 } else {
-                    pushArg();
+                    if (acc.length > 0) {
+                        pushArg();
+                    }
                 }
                 break;
             default:
@@ -133,30 +133,31 @@ export function processArgs(inArgs: string[], cmd: ICommand): { args: string[]; 
     return { args };
 }
 
-export function runCommand(commands: ICommand[], props: RunCommandProps) {
-    const [cmdName, ...cmdArgsParts] = props.line.trim().split(' ');
+export function runSingleCommand(cmd: ICommand, rawArgs: string[], props: RunCommandProps) {
+    const { args, error } = processArgs(rawArgs, cmd);
+
+    if (error) {
+        props.write(`Error: ${error}`);
+        props.write(usage(cmd));
+        return;
+    }
+
+    cmd.run({
+        ...props,
+        args,
+    });
+}
+
+export function runCommand(commands: ICommand[], props: RunCommandProps, line: string) {
+    const [cmdName, ...rawArgs] = parseArgs(line);
 
     if (!cmdName) {
         return;
     }
 
-    const rawArgs = parseArgs(cmdArgsParts.join(' '));
-
     for (const cmd of commands) {
         if (cmdName === cmd.name) {
-            const { args, error } = processArgs(rawArgs, cmd);
-
-            if (error) {
-                props.write(`Error: ${error}`);
-                props.write(usage(cmd));
-                return;
-            }
-
-            cmd.run({
-                ...props,
-                cmdName,
-                args,
-            });
+            runSingleCommand(cmd, rawArgs, props);
             return;
         }
     }

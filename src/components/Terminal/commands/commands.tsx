@@ -73,7 +73,7 @@ export const pwdCmd: ICommand = {
 export const lsCmd: ICommand = {
     name: 'ls',
     short: 'List directory content',
-    args: [{ name: 'path' }],
+    args: [{ name: 'path', default: '.' }],
     run({ write, cwd, fs, args }) {
         nodeHelper(write, fs, cwd, args[0], (node, absPath) => {
             if (isFile(node)) {
@@ -137,7 +137,7 @@ export const shrugCmd: ICommand = {
     },
 };
 
-const dino = t(`
+export const dino = t(`
                __
               / _)
      _/\\/\\/\\_/ /
