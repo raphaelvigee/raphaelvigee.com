@@ -1,6 +1,6 @@
 {
-  "app.css": "/app.a905b485.css",
-  "app.js": "/app.97caeb4e.js",
+  "app.css": "/app.61e5bf43.css",
+  "app.js": "/app.819a81ff.js",
   "runtime.js": "/runtime.3d179b24.js",
   "assets/cv/CV_Raphael_Vigee.short.pdf": "/assets/cv/CV_Raphael_Vigee.short.pdf",
   "fonts/LemonMilk.ttf": "/fonts/LemonMilk.6a363560.ttf",
@@ -96,6 +96,7 @@
   "fonts/icomoon.ttf": "/fonts/icomoon.fa36e9fd.ttf",
   "icons-6feb41c385923b109e50d60408883b80/raccoon.png": "/icons-6feb41c385923b109e50d60408883b80/manifest.webapp",
   "images/icomoon.svg": "/images/icomoon.94ed09fd.svg",
+  "images/meme.jpg": "/images/meme.b64ee2d1.jpg",
   "images/raccoon.svg": "/images/raccoon.8f53783d.svg",
   "index.html": "/index.html"
 }
