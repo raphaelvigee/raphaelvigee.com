@@ -4,6 +4,7 @@ import useEventListener from '../../hooks/useEventListener';
 import { IFsNode } from './fs';
 import styles from './Terminal.scss';
 import { ICommand, runCommand, usage } from './utils';
+import { Context } from './useScrollBottom';
 
 function Line({ prompt, content }: { prompt: boolean; content: ReactNode }) {
     return (
@@ -285,24 +286,26 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
     );
 
     return (
-        <div className={styles.terminal} onClick={focusInput}>
-            {lines.map((c, i) => (
-                <Line key={i} prompt={c.input} content={c.content} />
-            ))}
-            {!running && <CurrentLine line={currentLine} pos={caretPos} />}
-            <input
-                type="text"
-                className={styles.hiddenInput}
-                ref={inputRef}
-                value={currentLine}
-                autoCapitalize={'none'}
-                autoComplete={'off'}
-                autoCorrect={'off'}
-                spellCheck={false}
-                autoFocus={true}
-                onChange={onInputChange}
-            />
-            <div ref={bottomRef} />
-        </div>
+        <Context.Provider value={scrollBottom}>
+            <div className={styles.terminal} onClick={focusInput}>
+                {lines.map((c, i) => (
+                    <Line key={i} prompt={c.input} content={c.content} />
+                ))}
+                {!running && <CurrentLine line={currentLine} pos={caretPos} />}
+                <input
+                    type="text"
+                    className={styles.hiddenInput}
+                    ref={inputRef}
+                    value={currentLine}
+                    autoCapitalize={'none'}
+                    autoComplete={'off'}
+                    autoCorrect={'off'}
+                    spellCheck={false}
+                    autoFocus={true}
+                    onChange={onInputChange}
+                />
+                <div ref={bottomRef} />
+            </div>
+        </Context.Provider>
     );
 }
