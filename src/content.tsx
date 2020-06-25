@@ -127,6 +127,7 @@ export const Education = [
     {
         date: 'September 2016 - June 2020',
         title: 'BSc Computer Science (Artificial Intelligence) with a Year in Industry',
+        details: 'First Class Honours',
         location: 'University of Kent, United Kingdom',
     },
     {
