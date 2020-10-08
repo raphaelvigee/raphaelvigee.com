@@ -2,11 +2,11 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/runtime.3d179b24.js",
-        "/app.30e0dfc1.js"
+        "/runtime.16f8e42f.js",
+        "/app.ceed6512.js"
       ],
       "css": [
-        "/app.61e5bf43.css"
+        "/app.5b1d7f21.css"
       ]
     }
   }
