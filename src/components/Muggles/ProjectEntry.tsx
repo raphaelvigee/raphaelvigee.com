@@ -1,13 +1,29 @@
+import { linearGradient } from 'polished';
 import * as React from 'react';
+import styled from 'styled-components';
+import { Fonts } from '../../styled';
 import GradientLine from './Utils/GradientLine';
-import styles from './ProjectEntry.scss';
 
 interface TagProps {
     name: string;
 }
 
+const TagContainer = styled.span`
+    background-image: ${(props) =>
+        linearGradient({
+            colorStops: [props.theme.secondary, props.theme.primary],
+            fallback: props.theme.primary,
+            toDirection: 'to bottom right',
+        })};
+    border-radius: 4px;
+    padding: 0.2em 0.8em;
+    font-size: 0.7em;
+    margin-right: 5px;
+    color: white;
+`;
+
 function Tag({ name }: TagProps) {
-    return <span className={styles.tag}>{name}</span>;
+    return <TagContainer>{name}</TagContainer>;
 }
 
 interface ProjectEntryProps {
@@ -17,12 +33,40 @@ interface ProjectEntryProps {
     tags: TagProps[];
 }
 
+const Entry = styled.div`
+    background: white;
+    margin-top: 1em;
+`;
+
+const Content = styled.div`
+    padding: 1em;
+`;
+
+const Title = styled.div`
+    ${Fonts.LemonMilk};
+    font-weight: normal;
+    color: ${(props) => props.theme.primary};
+    margin-bottom: 10px;
+
+    a {
+        color: inherit;
+    }
+`;
+
+const Description = styled.div`
+    color: black;
+`;
+
+const Tags = styled.div`
+    margin-top: 10px;
+`;
+
 export default function ProjectEntry({ title, link, description, tags = [] }: ProjectEntryProps) {
     return (
-        <div className={styles.entry}>
+        <Entry>
             <GradientLine width={'100%'} />
-            <div className={styles.content}>
-                <div className={styles.title}>
+            <Content>
+                <Title>
                     {link ? (
                         <a href={link} target={'_blank'} rel="noreferrer">
                             {title}
@@ -30,16 +74,16 @@ export default function ProjectEntry({ title, link, description, tags = [] }: Pr
                     ) : (
                         title
                     )}
-                </div>
+                </Title>
 
-                <div className={styles.description}>{description}</div>
+                <Description>{description}</Description>
 
-                <div className={styles.tags}>
+                <Tags>
                     {tags.map((tag, i) => (
                         <Tag key={i} {...tag} />
                     ))}
-                </div>
-            </div>
-        </div>
+                </Tags>
+            </Content>
+        </Entry>
     );
 }

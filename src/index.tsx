@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import 'normalize.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './components/Muggles/App';
+import App from './components/App';
 
 ReactDOM.render(<App />, document.getElementById('app-root'));
 

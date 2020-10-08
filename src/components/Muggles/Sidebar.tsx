@@ -4,7 +4,7 @@ import { Link, NavLink, Route, RouteComponentProps, withRouter } from 'react-rou
 import { Pages } from '../../content';
 import GradientLine from './Utils/GradientLine';
 import Name from './Name';
-import styles from './Sidebar.scss';
+import styles from './Sidebar.scss?module';
 import TiltRaccoon from './TiltRaccoon';
 
 interface MenuItemProps {
@@ -82,17 +82,17 @@ class Sidebar extends React.Component<ISidebar, ISSidebar> {
 
                         <div className={styles.social}>
                             <a href="http://github.com/raphaelvigee" target={'_blank'} rel={'noreferrer'}>
-                                <span className={cx(styles.icon, styles['icon-github'])} />
+                                <span className={cx('icon', 'icon-github')} />
                             </a>
                             <a
                                 href="http://stackoverflow.com/users/3212099/rapha%C3%ABl-vig%C3%A9e"
                                 target={'_blank'}
                                 rel={'noreferrer'}
                             >
-                                <span className={cx(styles.icon, styles['icon-stack-overflow'])} />
+                                <span className={cx('icon', 'icon-stack-overflow')} />
                             </a>
                             <a href="http://linkedin.com/in/raphaelvigee" target={'_blank'} rel={'noreferrer'}>
-                                <span className={cx(styles.icon, styles['icon-linkedin-square'])} />
+                                <span className={cx('icon', 'icon-linkedin-square')} />
                             </a>
                         </div>
 

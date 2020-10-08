@@ -1,11 +1,41 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import * as React from 'react';
-import styles from './Form.scss';
+import styled, { css } from 'styled-components';
+import { Fonts } from '../../styled';
 
-export const InputText: React.FC<InputHTMLAttributes<HTMLInputElement>> = (props) => (
-    <input type="text" className={styles.textInput} {...props} />
-);
+const base = css`
+    ${Fonts.Roboto};
+    border: 3px solid ${(props) => props.theme.primary};
+    font-weight: normal;
+    padding: 0.2em;
+    display: block;
+    color: ${(props) => props.theme.grey};
+    width: 100%;
+    outline: none;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    transition: 0.3s all;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
-export const InputTextArea: React.FC<TextareaHTMLAttributes<HTMLTextAreaElement>> = (props) => (
-    <textarea className={styles.textInput} rows={8} style={{ resize: 'none' }} {...props} />
-);
+    &:focus {
+        border: 3px solid ${(props) => props.theme.secondary};
+    }
+
+    &::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: lightgrey;
+        opacity: 1; /* Firefox */
+    }
+`;
+
+export const InputText = styled.input.attrs({
+    type: 'text',
+})`
+    ${base}
+`;
+
+export const InputTextArea = styled.textarea.attrs({
+    rows: 8,
+})`
+    ${base};
+    resize: none;
+`;

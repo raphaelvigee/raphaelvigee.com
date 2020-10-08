@@ -1,7 +1,6 @@
-import cx from 'classnames';
 import * as React from 'react';
+import styled from 'styled-components';
 import Button from './Utils/Button';
-import styles from './Contact.scss';
 import { InputText, InputTextArea } from './Form';
 import Page from './Page';
 import Title from './Utils/Title';
@@ -14,6 +13,18 @@ interface ContactState {
     processing: boolean;
     ok: boolean;
 }
+
+const Holder = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+const Message = styled.span.attrs({
+    ok: false,
+})`
+    margin-left: 10px;
+    color: ${(props) => (props.ok ? '#4BB543' : '#cc0000')};
+`;
 
 export default class Contact extends React.Component<Record<string, unknown>, ContactState> {
     constructor(props) {
@@ -144,15 +155,11 @@ export default class Contact extends React.Component<Record<string, unknown>, Co
                     placeholder={'Message'}
                 />
 
-                <div className={styles.holder}>
+                <Holder>
                     <Button disabled={!this.canSubmit()} onClick={this.handleSubmit} label={'Send'} />
 
-                    {response && (
-                        <span className={cx(styles.message, ok && styles.success, !ok && styles.error)}>
-                            {ok ? "Message sent, I'll be in touch!" : response.error}
-                        </span>
-                    )}
-                </div>
+                    {response && <Message ok={ok}>{ok ? "Message sent, I'll be in touch!" : response.error}</Message>}
+                </Holder>
             </React.Fragment>
         );
     }

@@ -1,4 +1,12 @@
-@import "../../common";
+@import "~include-media/dist/include-media";
+
+$primary: #011F4C;
+$secondary: #FF3366;
+
+.fontLemonMilk {
+  font-family: 'Lemon/Milk';
+  font-weight: bold;
+}
 
 .sidebarSpacer {
   width: 100%;

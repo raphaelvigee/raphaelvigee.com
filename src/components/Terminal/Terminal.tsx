@@ -1,22 +1,34 @@
 import * as React from 'react';
 import { MouseEvent, ReactNode, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import styled from 'styled-components';
 import useEventListener from '../../hooks/useEventListener';
 import { IFsNode } from './fs';
-import styles from './Terminal.scss';
 import { ICommand, runCommand, usage } from './utils';
 import { Context } from './useScrollBottom';
 
+const LineDiv = styled.div`
+    display: block;
+    word-break: break-all;
+    white-space: pre-wrap;
+`;
+
 function Line({ prompt, content }: { prompt: boolean; content: ReactNode }) {
     return (
-        <div className={styles.line}>
+        <LineDiv>
             {prompt && '$ '}
             {content}
-        </div>
+        </LineDiv>
     );
 }
 
+const CaretDiv = styled.div`
+    display: inline-block;
+    background: white;
+    color: black;
+`;
+
 function Caret({ symbol = <>&nbsp;</> }: { symbol?: ReactNode }) {
-    return <div className={styles.caret}>{symbol}</div>;
+    return <CaretDiv>{symbol}</CaretDiv>;
 }
 
 function CurrentLine({ line, pos }: { line: string; pos: number }) {
@@ -99,6 +111,26 @@ function useHistory() {
 
     return [add, elem, prev, next, cancelI] as const;
 }
+
+const HiddenInput = styled.input`
+    width: 1px;
+    height: 1px;
+    position: fixed;
+    z-index: -999;
+    padding: 0;
+    margin: 0;
+    border: 0;
+`;
+
+const Container = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: white;
+    font-family: Courier, monospace;
+    overflow-x: hidden;
+    overflow-y: scroll;
+`;
 
 export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null, initCmds = [] }: ITerminal) {
     const [lines, setLines] = useState<ILine[]>([]);
@@ -287,14 +319,13 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
 
     return (
         <Context.Provider value={scrollBottom}>
-            <div className={styles.terminal} onClick={focusInput}>
+            <Container onClick={focusInput}>
                 {lines.map((c, i) => (
                     <Line key={i} prompt={c.input} content={c.content} />
                 ))}
                 {!running && <CurrentLine line={currentLine} pos={caretPos} />}
-                <input
+                <HiddenInput
                     type="text"
-                    className={styles.hiddenInput}
                     ref={inputRef}
                     value={currentLine}
                     autoCapitalize={'none'}
@@ -305,7 +336,7 @@ export default function Terminal({ cmds: userCmds, fs, initCwd = [], motd = null
                     onChange={onInputChange}
                 />
                 <div ref={bottomRef} />
-            </div>
+            </Container>
         </Context.Provider>
     );
 }
