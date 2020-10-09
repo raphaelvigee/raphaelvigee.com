@@ -10,7 +10,6 @@ const Hacks: React.FC = () => (
         {HacksItems.map((h, i) => (
             <Entry key={i} {...h} />
         ))}
-        ,
     </Page>
 );
 
