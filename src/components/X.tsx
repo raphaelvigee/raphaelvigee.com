@@ -26,7 +26,7 @@ Feeling lost? try help
 const pagesFiles = Pages.map(
     (p) =>
         new FsFile({
-            name: p.path,
+            name: `${p.path}.txt`,
             cat: p.cat,
         }),
 );
@@ -42,7 +42,7 @@ const fs: IFsNode = new FsFolder({
                     children: [
                         ...pagesFiles,
                         new FsFile({
-                            name: 'raccoon',
+                            name: 'raccoon.png',
                             cat: (_, { write }) => {
                                 write(
                                     <div style={{ width: '10vw', padding: 10 }}>
