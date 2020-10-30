@@ -61,6 +61,16 @@ const Tags = styled.div`
     margin-top: 10px;
 `;
 
+const Link = styled.a`
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    transition: all 0.2s;
+
+    &:hover {
+        text-decoration-color: ${(props) => props.theme.secondary};
+    }
+`;
+
 export default function ProjectEntry({ title, link, description, tags = [] }: ProjectEntryProps) {
     return (
         <Entry>
@@ -68,9 +78,9 @@ export default function ProjectEntry({ title, link, description, tags = [] }: Pr
             <Content>
                 <Title>
                     {link ? (
-                        <a href={link} target={'_blank'} rel="noreferrer">
+                        <Link href={link} target={'_blank'} rel="noreferrer">
                             {title}
-                        </a>
+                        </Link>
                     ) : (
                         title
                     )}

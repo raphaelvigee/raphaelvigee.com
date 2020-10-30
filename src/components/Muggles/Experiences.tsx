@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import { JobExperiences, ProjectExperiences } from '../../content';
 import Entry from './Utils/Entry';
 import Page from './Page';
@@ -6,22 +7,28 @@ import ProjectEntry from './ProjectEntry';
 import SubTitle from './Utils/SubTitle';
 import Title from './Utils/Title';
 
-const Experiences: React.FC = () => (
-    <Page>
-        <Title style={{ marginBottom: 60 }} label={'Experiences'} />
+const C = styled.div`
+    display: flex;
+    align-items: center;
+    white-space: pre;
+`;
 
-        <SubTitle label={'Jobs'} />
+export default function Experiences() {
+    return (
+        <Page>
+            <Title style={{ marginBottom: 60 }} label={'Experiences'} />
 
-        {JobExperiences.map((e, i) => (
-            <Entry key={i} {...e} />
-        ))}
+            <SubTitle label={'Jobs'} />
 
-        <SubTitle style={{ marginTop: 60 }} label={'Projects'} />
+            {JobExperiences.map((e, i) => (
+                <Entry key={i} {...e} />
+            ))}
 
-        {ProjectExperiences.map((e, i) => (
-            <ProjectEntry key={i} {...e} />
-        ))}
-    </Page>
-);
+            <SubTitle style={{ marginTop: 60 }} label={'Projects'} />
 
-export default Experiences;
+            {ProjectExperiences.map((e, i) => (
+                <ProjectEntry key={i} {...e} />
+            ))}
+        </Page>
+    );
+}

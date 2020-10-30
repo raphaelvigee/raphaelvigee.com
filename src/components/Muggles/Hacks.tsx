@@ -4,13 +4,13 @@ import Entry from './Utils/Entry';
 import Page from './Page';
 import Title from './Utils/Title';
 
-const Hacks: React.FC = () => (
-    <Page>
-        <Title style={{ marginBottom: 60 }} label={'Hacks'} />
-        {HacksItems.map((h, i) => (
-            <Entry key={i} {...h} />
-        ))}
-    </Page>
-);
-
-export default Hacks;
+export default function Hacks() {
+    return (
+        <Page>
+            <Title style={{ marginBottom: 60 }} label={'Hacks'} />
+            {HacksItems.map((h, i) => (
+                <Entry key={i} {...h} />
+            ))}
+        </Page>
+    );
+}

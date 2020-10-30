@@ -101,6 +101,7 @@ $secondary: #FF3366;
 
   &:not(.homepage) {
     position: fixed;
+    z-index: 999;
 
     &.active {
       .menu {

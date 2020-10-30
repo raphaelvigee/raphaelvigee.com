@@ -18,7 +18,7 @@ function printTitle(title: string, write) {
 }
 
 function printEntry<O>(keys: { [s in keyof O]?: string }, o: O, write) {
-    const m = Math.max(...Object.keys(keys).map((k) => k.length));
+    const m = Math.max(...Object.values<string | undefined>(keys).map((k) => (k ? k.length : 0)));
 
     for (const [k, name] of Object.entries(keys) as Array<[keyof O, string]>) {
         if (k in o) {
@@ -36,17 +36,34 @@ function printEntry<O>(keys: { [s in keyof O]?: string }, o: O, write) {
 
 export const Pages = [
     {
-        name: 'Education',
-        path: 'education',
-        component: EducationComponent,
+        name: 'Experiences',
+        path: 'experiences',
+        component: ExperiencesComponent,
         cat: (_, { write }: RunProps) => {
-            Education.forEach((e) => {
+            printTitle('Jobs', write);
+            JobExperiences.forEach((e) => {
                 printEntry(
                     {
                         date: 'Date',
                         title: 'Title',
                         details: 'Details',
                         location: 'Location',
+                        extras: 'More info',
+                    },
+                    e,
+                    write,
+                );
+            });
+
+            printNl(write);
+
+            printTitle('Projects', write);
+            ProjectExperiences.forEach((e) => {
+                printEntry(
+                    {
+                        title: 'Title',
+                        description: 'Description',
+                        link: 'Link',
                     },
                     e,
                     write,
@@ -73,33 +90,17 @@ export const Pages = [
         },
     },
     {
-        name: 'Experiences',
-        path: 'experiences',
-        component: ExperiencesComponent,
+        name: 'Education',
+        path: 'education',
+        component: EducationComponent,
         cat: (_, { write }: RunProps) => {
-            printTitle('Jobs', write);
-            JobExperiences.forEach((e) => {
+            Education.forEach((e) => {
                 printEntry(
                     {
                         date: 'Date',
                         title: 'Title',
                         details: 'Details',
                         location: 'Location',
-                    },
-                    e,
-                    write,
-                );
-            });
-
-            printNl(write);
-
-            printTitle('Projects', write);
-            ProjectExperiences.forEach((e) => {
-                printEntry(
-                    {
-                        title: 'Title',
-                        description: 'Description',
-                        link: 'Link',
                     },
                     e,
                     write,
@@ -323,40 +324,73 @@ export const JobExperiences = [
         title: 'Software Engineer',
         details: 'Golang / Kubernetes / ReactJs / NodeJs / Python',
         location: 'Cisco, Remote',
+        extras: (
+            <ul>
+                <li>
+                    Further work on the productivity tool (see below), improving it taking into account user feedback
+                    and new features requests
+                </li>
+                <li>
+                    Developed a cloud wrapper for a non-cloud system, making it easy to manage as a cloud service and
+                    adding features such as access control, HA and built-in technical support
+                </li>
+            </ul>
+        ),
     },
     {
         date: 'August 2018 - July 2019',
         title: 'Software Engineer Intern',
         details: 'Golang / Kubernetes / ReactJs / NodeJs / Python',
         location: 'Cisco, San Jose, USA',
+        extras: (
+            <ul>
+                <li>
+                    Developed a internal tool to boost developer productivity by gathering data from across services and
+                    displaying them in a single place in an intuitive manner
+                </li>
+                <li>Introduced Kubernetes to the team and made a POC production-ready HA cluster</li>
+                <li>Optimized the build pipelines making it 10% faster and more reliable</li>
+                <li>Worked on various internal dashboarding and reports tools</li>
+            </ul>
+        ),
     },
     {
         date: 'June - July 2017',
         title: 'Full Stack Web Developer',
         details: 'Symfony 3 / ReactJs',
         location: 'Windoo, Paris, France',
+        extras: <span>Began the transition the B2C product into a B2B platform</span>,
     },
     {
         date: 'November 2016 - March 2018',
         title: 'Full Stack Web Developer & Mobile App Developer',
         details: 'Symfony 3 / ReactJs / React Native',
         location: 'Captain Fight, Bordeaux, France (Remote)',
+        extras: (
+            <span>
+                Developed the platform and the mobile applications with a very quick feedback loop to accommodate users
+                needs
+            </span>
+        ),
     },
     {
         date: 'July 2016',
         title: 'Full Stack Web Developer & Mobile App Developer',
         details: 'Symfony 2 / React Native',
         location: 'Windoo, Paris, France',
+        extras: <span>Laid down the platform foundations with the CTO</span>,
     },
     {
         date: 'July - August 2015',
         title: 'Full Stack Web Developer',
         location: 'Concepting, Paris, France',
+        extras: <span>Participated in numerous projects in Joomla, Wordpress and Symfony</span>,
     },
     {
         date: 'May 2014',
         title: 'Full Stack Web Developer',
         location: 'Les Argonautes, Paris, France',
+        extras: <span>Participated in numerous projects in Wordpress</span>,
     },
 ];
 
@@ -372,8 +406,14 @@ export const ProjectExperiences = [
     {
         title: 'Musish',
         link: 'https://github.com/Musish/Musish',
-        description: 'An Apple Music Web Client | #1 GH Trending in JS | #2 GH Trending Global | ★2.4k+',
+        description: 'An Apple Music Web Client | ★2.5k+',
         tags: [TAG_REACT, TAG_NODE],
+        extras: (
+            <ul>
+                <li>#1 GH Trending in JS</li>
+                <li>#2 GH Trending Global</li>
+            </ul>
+        ),
     },
     {
         title: 'Risotto',

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { Pages } from '../../content';
 import { Fonts } from '../../styled';
 import { LinkButton } from './Utils/Button';
 
@@ -49,11 +50,9 @@ export default function Home() {
             </Top>
             <Bottom>
                 <ButtonsContainer>
-                    <LinkButton to={'/education'} label={'Education'} />
-                    <LinkButton to={'/hacks'} label={'Hacks'} />
-                    <LinkButton to={'/experiences'} label={'Experiences'} />
-                    <LinkButton to={'/resume'} label={'Résumé'} />
-                    <LinkButton to={'/contact'} label={'Contact'} />
+                    {Pages.map((p) => (
+                        <LinkButton key={p.path} to={p.path} label={p.name} />
+                    ))}
                 </ButtonsContainer>
             </Bottom>
         </Container>

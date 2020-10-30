@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import { Fonts } from '../../styled';
 
 const base = css`
-    ${Fonts.Roboto};
     border: 3px solid ${(props) => props.theme.primary};
     font-weight: normal;
     padding: 0.2em;
@@ -26,16 +25,19 @@ const base = css`
         opacity: 1; /* Firefox */
     }
 `;
+const baseFont = ({ value }) => (value ? Fonts.RobotoLt : Fonts.LemonMilk);
 
 export const InputText = styled.input.attrs({
     type: 'text',
 })`
-    ${base}
+    ${base};
+    ${baseFont};
 `;
 
 export const InputTextArea = styled.textarea.attrs({
     rows: 8,
 })`
     ${base};
+    ${baseFont};
     resize: none;
 `;

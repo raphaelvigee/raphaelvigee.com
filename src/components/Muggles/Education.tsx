@@ -4,14 +4,14 @@ import Entry from './Utils/Entry';
 import Page from './Page';
 import Title from './Utils/Title';
 
-const Education: React.FC = () => (
-    <Page>
-        <Title style={{ marginBottom: 60 }} label={'Education'} />
+export default function Education() {
+    return (
+        <Page>
+            <Title style={{ marginBottom: 60 }} label={'Education'} />
 
-        {EducationItems.map((e, i) => (
-            <Entry key={i} {...e} />
-        ))}
-    </Page>
-);
-
-export default Education;
+            {EducationItems.map((e, i) => (
+                <Entry key={i} {...e} />
+            ))}
+        </Page>
+    );
+}

@@ -10,7 +10,12 @@ export const GlobalStyle = createGlobalStyle`
 
 a {
   text-decoration: none;
-}`;
+}
+
+ul li {
+    margin-bottom: 10px
+}
+`;
 
 const size = {
     tablet: '768px',
