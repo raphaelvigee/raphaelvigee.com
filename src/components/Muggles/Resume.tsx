@@ -22,7 +22,7 @@ export default function Resume() {
             </a>
 
             <PDF type="application/pdf" data={CVUrl}>
-                <p>Insert your error message here, if the PDF cannot be displayed.</p>
+                <p>Unable to preview the resume, please download it.</p>
             </PDF>
         </Page>
     );
