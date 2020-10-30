@@ -1,17 +1,10 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import { JobExperiences, ProjectExperiences } from '../../content';
 import Entry from './Utils/Entry';
 import Page from './Page';
 import ProjectEntry from './ProjectEntry';
 import SubTitle from './Utils/SubTitle';
 import Title from './Utils/Title';
-
-const C = styled.div`
-    display: flex;
-    align-items: center;
-    white-space: pre;
-`;
 
 export default function Experiences() {
     return (
