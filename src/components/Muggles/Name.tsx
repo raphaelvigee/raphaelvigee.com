@@ -21,7 +21,6 @@ const NamesContainer = styled(Link)`
     text-orientation: mixed;
     transform: rotate(180deg);
     font-size: 3.2em;
-    transition: 0.3s all;
     margin-top: 0.4em;
     margin-bottom: 0.4em;
 
