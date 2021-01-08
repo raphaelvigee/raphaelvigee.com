@@ -320,7 +320,13 @@ export const Hacks = [
 
 export const JobExperiences = [
     {
-        date: 'July 2019 - Present',
+        date: 'January 2021 - Present',
+        title: 'Software Engineer',
+        details: 'Golang / Kubernetes / NodeJs',
+        location: 'Infiot, Remote',
+    },
+    {
+        date: 'July 2019 - January 2021',
         title: 'Software Engineer',
         details: 'Golang / Kubernetes / ReactJs / NodeJs / Python',
         location: 'Cisco, Remote',
